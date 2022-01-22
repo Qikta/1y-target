@@ -9,7 +9,7 @@ const createOgp = async (
     req: NextApiRequest,
     res: NextApiResponse
   ): Promise<void> => {
-    const { id } = req.query;
+    const { title, user_name } = req.body;
     const WIDTH = 1200 as const;
     const HEIGHT = 630 as const;
     const DX = 0 as const;
@@ -28,12 +28,12 @@ const createOgp = async (
     ctx.fillStyle = "#000000";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    const text = "ogp生成したいねん"
+    const text = String(title)
     ctx.fillText(text, WIDTH / 2, HEIGHT / 2);
     const buffer = canvas.toBuffer();
     const { error } = await supabase.storage
         .from('ogp-img')
-        .upload('opg/test8.png', buffer, {
+        .upload(`opg/${title}-${user_name}.png`, buffer, {
       contentType: 'image/png',
       cacheControl: '3600',
       upsert: false
