@@ -3,7 +3,7 @@ import { supabase } from '../utils/supabaseClient'
 
 export default function useUser() {
   const [session, setSession] = useState()
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -17,36 +17,43 @@ export default function useUser() {
       // @ts-ignore
       authListener.unsubscribe()
     }
-  }, [])
+  }, [session])
 
-  useEffect(() => {
-    const setupUser = async () => {
-      // @ts-ignore
-      if (session?.user.id) {
-        const { data: user } = await supabase
-          .from("users")
-          .select("*")
-          // @ts-ignore
-          .eq("id", session.user.id)
-          .single();
-        setUser(user);
-      }
-    };
-    setupUser();
-  }, [session]);
+  // useEffect(() => {
+  //   const setupUser = async () => {
+  //     // @ts-ignore
+  //     if (session?.user.id) {
+  //       const { data: user, error } = await supabase
+  //         .from("users")
+  //         .select("*")
+  //         // @ts-ignore
+  //         .eq("id", session.user.id)
+  //         .single();
+  //       if (error) {throw error}
+  //       setUser(user);
+  //     }
+  //   };
+  //   setupUser();
+  // }, [session]);
 
   function signInWithGoogle() {
     supabase.auth.signIn({ provider: "google" });
   }
 
+  function signInWithGithub() {
+    supabase.auth.signIn({ provider: "github" });
+  }
+
   function signOut() {
     supabase.auth.signOut();
+    location.reload()
   }
 
   return {
     session,
-    user,
+    // user,
     signInWithGoogle,
+    signInWithGithub,
     signOut,
   };
 }

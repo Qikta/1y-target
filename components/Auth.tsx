@@ -2,16 +2,15 @@ import useModal from "../hooks/useModal"
 import useUser from "../hooks/useUser";
 
 
-export default function Auth () {
-  const { open, close } = useModal()
-  const { signInWithGoogle } = useUser();
+export default function Auth (props: any) {
+  const { signInWithGoogle, signInWithGithub  } = useUser();
 
     return (
         <div className="">
     <div className="bg-white rounded-t-lg p-8">
       <div className="flex justify-end p-2">
         <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-          onClick={() => close() }
+          onClick={props.onClick}
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
@@ -23,6 +22,7 @@ export default function Auth () {
       <div>
         <div className="flex items-center justify-center space-x-4 mt-3">
           <button
+          onClick={() => signInWithGithub() }
             className="
                 flex
                 items-center
@@ -185,7 +185,7 @@ export default function Auth () {
         </div>
         <div className="mt-4 flex items-center text-gray-500">
           <input type="checkbox" id="remember" name="remember" className="mr-3" />
-          {/* <label for="remember">Remember me</label> */}
+          <label htmlFor="remember">Remember me</label>
         </div>
         <div className="flex items-center justify-center mt-8">
           <button
