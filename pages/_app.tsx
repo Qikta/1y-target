@@ -5,23 +5,18 @@ import Header from '../components/Header'
 import ModalContent from '../components/ModalContent'
 import useModal from '../hooks/useModal'
 import { createContext, useCallback, useState } from 'react'
+import useUser from '../hooks/useUser'
 
 export const ModalContext = createContext<[]>({})
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const { toggle, open, close } = useModal()
-  const [toggle, setToggle] = useState(false)
-
-  const open = () => {
-    console.log('open');
-    
-    setToggle(true)}
+  const { toggle, open, close } = useModal()
 
   return (
     <>
        <Header onClick={open} />
         <Component {...pageProps} />
-        { toggle && <ModalContent /> }
+        { toggle && <ModalContent onClick={close} /> }
         <Footer />
     </>
   ) 
