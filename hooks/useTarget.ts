@@ -21,6 +21,7 @@ export interface ITargetForm {
   description?: string
   value: number
   user_id?: string
+  ogp_url?: string 
 }
 
 export default function useTarget() {
@@ -75,18 +76,17 @@ export default function useTarget() {
     if (user !== null) {
       try {
         setLoading(true);
-        console.log(request);
+
+      await axios.post('api/ogp', {
+          title: request.name,
+          user_name: 'test'
+        }).then((res) => {
+          request.ogp_url = res.data.ogp_url
+        }).catch((err) => alert(err))
         
         const { error } = await supabase.from('targets').insert([request])
 
         if (error) { throw error}
-
-        await axios.post('api/ogp', {
-          title: request.name,
-          user_name: 'test'
-        }).then((res) => 
-        console.log(res)
-        ).catch((err) => alert(err))
 
         location.reload()
       } catch(err) {
