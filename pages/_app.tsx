@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
        <Header onClick={open} />
-        <Component {...pageProps} />
+        <Component {...pageProps} onClick={open} />
         { toggle && <ModalContent onClick={close} /> }
         <Footer />
     </>
