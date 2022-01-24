@@ -24,14 +24,14 @@ if (loading) return <div>loading...</div>
 if (!targetList.length) return <div>missing data...</div>
   return (
     <div className="container my-12 mx-auto px-4 md:px-12 max-w-screen-md">
-        <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-              {
-                targetList.map((target, index) => (
-                  <Context.Provider value={target} key={index} >
-                    <Target />
-                  </Context.Provider>
-                ))
-              }
+        <div className="flex flex-wrap -mx-1 lg:-mx-4">
+          {
+            targetList.map((target, index) => (
+              <Context.Provider value={target} key={index} >
+                <Target />
+              </Context.Provider>
+            ))
+          }
         </div>
     </div>
   )
