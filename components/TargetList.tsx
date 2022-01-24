@@ -12,7 +12,8 @@ export const Context = createContext<ITarget>({
   is_complete: false,
   favorite_count: 0,
   avater_url: '',
-  created_date: ''
+  created_date: '',
+  ogp_url: ''
 })
 
 export default function TargetList() {
