@@ -123,6 +123,48 @@ export interface paths {
       };
     };
   };
+  "/target_view": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.target_view.id"];
+          name?: parameters["rowFilter.target_view.name"];
+          description?: parameters["rowFilter.target_view.description"];
+          value?: parameters["rowFilter.target_view.value"];
+          is_complete?: parameters["rowFilter.target_view.is_complete"];
+          created_at?: parameters["rowFilter.target_view.created_at"];
+          favorite_count?: parameters["rowFilter.target_view.favorite_count"];
+          ogp_url?: parameters["rowFilter.target_view.ogp_url"];
+          username?: parameters["rowFilter.target_view.username"];
+          avatar_url?: parameters["rowFilter.target_view.avatar_url"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["target_view"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/targets": {
     get: {
       parameters: {
@@ -137,6 +179,7 @@ export interface paths {
           created_at?: parameters["rowFilter.targets.created_at"];
           emoji?: parameters["rowFilter.targets.emoji"];
           favorite_count?: parameters["rowFilter.targets.favorite_count"];
+          ogp_url?: parameters["rowFilter.targets.ogp_url"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -197,6 +240,7 @@ export interface paths {
           created_at?: parameters["rowFilter.targets.created_at"];
           emoji?: parameters["rowFilter.targets.emoji"];
           favorite_count?: parameters["rowFilter.targets.favorite_count"];
+          ogp_url?: parameters["rowFilter.targets.ogp_url"];
         };
         header: {
           /** Preference */
@@ -221,6 +265,7 @@ export interface paths {
           created_at?: parameters["rowFilter.targets.created_at"];
           emoji?: parameters["rowFilter.targets.emoji"];
           favorite_count?: parameters["rowFilter.targets.favorite_count"];
+          ogp_url?: parameters["rowFilter.targets.ogp_url"];
         };
         body: {
           /** targets */
@@ -279,45 +324,6 @@ export interface paths {
       };
     };
   };
-  "/targets_view": {
-    get: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.targets_view.id"];
-          name?: parameters["rowFilter.targets_view.name"];
-          description?: parameters["rowFilter.targets_view.description"];
-          value?: parameters["rowFilter.targets_view.value"];
-          is_complete?: parameters["rowFilter.targets_view.is_complete"];
-          deadline?: parameters["rowFilter.targets_view.deadline"];
-          username?: parameters["rowFilter.targets_view.username"];
-          /** Filtering Columns */
-          select?: parameters["select"];
-          /** Ordering */
-          order?: parameters["order"];
-          /** Limiting and Pagination */
-          offset?: parameters["offset"];
-          /** Limiting and Pagination */
-          limit?: parameters["limit"];
-        };
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters["range"];
-          /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
-          /** Preference */
-          Prefer?: parameters["preferCount"];
-        };
-      };
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions["targets_view"][];
-        };
-        /** Partial Content */
-        206: unknown;
-      };
-    };
-  };
 }
 
 export interface definitions {
@@ -344,6 +350,32 @@ export interface definitions {
     sex: number;
     /** Format: integer */
     age: number;
+  };
+  target_view: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: number;
+    /** Format: text */
+    name?: string;
+    /** Format: text */
+    description?: string;
+    /** Format: integer */
+    value?: number;
+    /** Format: boolean */
+    is_complete?: boolean;
+    /** Format: timestamp with time zone */
+    created_at?: string;
+    /** Format: integer */
+    favorite_count?: number;
+    /** Format: text */
+    ogp_url?: string;
+    /** Format: text */
+    username?: string;
+    /** Format: text */
+    avatar_url?: string;
   };
   targets: {
     /**
@@ -373,6 +405,8 @@ export interface definitions {
     emoji?: string;
     /** Format: integer */
     favorite_count: number;
+    /** Format: text */
+    ogp_url?: string;
   };
   targets_info_view: {
     /**
@@ -399,26 +433,6 @@ export interface definitions {
     username?: string;
     /** Format: text */
     avatar_url?: string;
-  };
-  targets_view: {
-    /**
-     * Format: bigint
-     * @description Note:
-     * This is a Primary Key.<pk/>
-     */
-    id?: number;
-    /** Format: text */
-    name?: string;
-    /** Format: text */
-    description?: string;
-    /** Format: integer */
-    value?: number;
-    /** Format: boolean */
-    is_complete?: boolean;
-    /** Format: date */
-    deadline?: string;
-    /** Format: text */
-    username?: string;
   };
 }
 
@@ -475,6 +489,28 @@ export interface parameters {
   "rowFilter.profiles.sex": string;
   /** Format: integer */
   "rowFilter.profiles.age": string;
+  /** @description target_view */
+  "body.target_view": definitions["target_view"];
+  /** Format: bigint */
+  "rowFilter.target_view.id": string;
+  /** Format: text */
+  "rowFilter.target_view.name": string;
+  /** Format: text */
+  "rowFilter.target_view.description": string;
+  /** Format: integer */
+  "rowFilter.target_view.value": string;
+  /** Format: boolean */
+  "rowFilter.target_view.is_complete": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.target_view.created_at": string;
+  /** Format: integer */
+  "rowFilter.target_view.favorite_count": string;
+  /** Format: text */
+  "rowFilter.target_view.ogp_url": string;
+  /** Format: text */
+  "rowFilter.target_view.username": string;
+  /** Format: text */
+  "rowFilter.target_view.avatar_url": string;
   /** @description targets */
   "body.targets": definitions["targets"];
   /** Format: bigint */
@@ -497,6 +533,8 @@ export interface parameters {
   "rowFilter.targets.emoji": string;
   /** Format: integer */
   "rowFilter.targets.favorite_count": string;
+  /** Format: text */
+  "rowFilter.targets.ogp_url": string;
   /** @description targets_info_view */
   "body.targets_info_view": definitions["targets_info_view"];
   /** Format: bigint */
@@ -519,22 +557,6 @@ export interface parameters {
   "rowFilter.targets_info_view.username": string;
   /** Format: text */
   "rowFilter.targets_info_view.avatar_url": string;
-  /** @description targets_view */
-  "body.targets_view": definitions["targets_view"];
-  /** Format: bigint */
-  "rowFilter.targets_view.id": string;
-  /** Format: text */
-  "rowFilter.targets_view.name": string;
-  /** Format: text */
-  "rowFilter.targets_view.description": string;
-  /** Format: integer */
-  "rowFilter.targets_view.value": string;
-  /** Format: boolean */
-  "rowFilter.targets_view.is_complete": string;
-  /** Format: date */
-  "rowFilter.targets_view.deadline": string;
-  /** Format: text */
-  "rowFilter.targets_view.username": string;
 }
 
 export interface operations {}
