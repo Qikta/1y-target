@@ -24,7 +24,7 @@ const createOgp = async (
     const canvas = createCanvas(WIDTH, HEIGHT);
     const ctx = canvas.getContext("2d");
 
-    const backgroundImage = await loadImage(path.resolve("./public/nodata.png"));
+    const backgroundImage = await loadImage(path.resolve("./public/bg_ogp.png"));
     ctx.drawImage(backgroundImage, DX, DY, WIDTH, HEIGHT);
     registerFont(path.resolve("./fonts/851MkPOP_100.ttf"), {
       family: "851MkPOP",
