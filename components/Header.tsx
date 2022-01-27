@@ -1,18 +1,54 @@
 import useUser from "../hooks/useUser"
 import { supabase } from "../utils/supabaseClient"
+// @ts-ignore
+import Modal from 'react-modal'
+import { useState } from "react";
 
+// スタイリング
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,0.3)"
+  },
+
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    width                 : '500px',
+    height                : '300px',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 export default function Header(props: any) {
   const { signOut, signInWithGoogle } = useUser()
+  const [modalIsOpen,setIsOpen] = useState(false)
   const session = supabase.auth.session()
+
+  // モーダルを開く処理
+  const openModal = () => {
+    setIsOpen(true)
+  }
+  // モーダルを閉じる処理
+  const closeModal = () => {
+    setIsOpen(false)
+  }
   return (
     <header>
     <nav className="container flex justify-between py-8 px-4 mx-auto bg-white max-w-screen-lg">
       <div className="flex items-center">
-        <h3 className="text-2xl font-medium text-blue-500">One Year Target</h3>
+        {/* <h2 className="text-3xl font-medium">One Year Target</h2> */}
+        <a href="#">
+          <h2 className="text-3xl font-medium">One Year Target</h2>
+        </a>
       </div>
       <div className="flex justify-end items-center space-x-2">
-        <a href="#">
+        {/* <a href="#">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6 h-6 text-gray-400"
@@ -46,8 +82,8 @@ export default function Header(props: any) {
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </a>
-        <a href="#" className="p-2 rounded-full bg-blue-50">
+        </a> */}
+        <button className="p-2 rounded-full bg-blue-50" onClick={openModal}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6 h-6 text-gray-200"
@@ -62,20 +98,60 @@ export default function Header(props: any) {
               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
             />
           </svg>
-        </a>
-        { session &&
-          <button className="block text-white bg-red-300 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        </button>
+        <Modal
+          // isOpenがtrueならモダールが起動する
+          isOpen={modalIsOpen}
+          // モーダルを閉じる処理を定義
+          onRequestClose={closeModal}
+          // スタイリングを定義
+          style={customStyles}
+        >
+          <h2>Hello</h2>
+          <button onClick={closeModal}>close</button>
+        </Modal>
+        { session ?
+          <button 
+            className="
+              block
+              hover:bg-gray-100
+              font-medium
+              rounded-lg
+              text-sm
+              px-5
+              py-2.5
+              text-center"
             type="button"
             onClick={ signOut }>
-            signOUt
+            signOut
           </button>
-        }
-        <button className="block text-white bg-red-300 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          :
+          <button
+            className="
+              block
+              hover:bg-gray-100
+              font-medium 
+              rounded-lg 
+              text-sm 
+              px-5 
+              py-2.5 
+              text-center"
             type="button"
             onClick={ signInWithGoogle }>
             login
           </button>
-        <button className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        }
+        <button
+          className="
+            block
+            hover:bg-gray-100
+            font-medium 
+            rounded-lg 
+            text-sm 
+            px-5 
+            py-2.5 
+            text-center
+            "
           type="button"
           onClick={props.onClick}>
           New OYT
