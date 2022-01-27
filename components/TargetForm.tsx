@@ -38,16 +38,25 @@ export default function TargetForm (props: any) {
                             cols={30}
                             rows={10}
                             placeholder="whrite here.."
-                            className="w-full p-4 text-gray-600 bg-indigo-50 outline-none rounded-md"
+                            className="w-full p-4 bg-gray-100 outline-none rounded-md"
                             {...register('description')}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="value" className="form-label">Achievement rate</label>
+                        <div className='relative pt-1'>
+                            <label htmlFor="achievementRate" className="form-label">Achievement rate</label>
                             <input
-                            id="value"
+                            id="achievementRate"
                             type="range"
-                            className="form-range appearance-none w-full h-6 p-0 mx-1 bg-gray-500 focus:outline-none focus:ring-0 focus:shadow-none"
+                            className="
+                              appearance-none
+                              w-full
+                              h-6
+                              p-0
+                              mx-1
+                              bg-transparent
+                              focus:outline-none
+                              focus:ring-0
+                              focus:shadow-none"
                             min="0"
                             max="100"
                             step="5"

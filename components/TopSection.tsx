@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import nodata from '../public/nodata.png'
+import headerPNG from '../public/header.png'
 export const TopSection = (props: any) => {
 
     return (
@@ -11,17 +11,40 @@ export const TopSection = (props: any) => {
           OneYearTarget is a service to share your own goals for the year. You can easily share what you want to do and what you want to achieve in a year through social networking services such as twitter. What are your goals for the year?
         </p>
         <div className="flex mb-6 space-x-4">
-            <button className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 " onClick={props.onClick}>
-                Get started
+            <button
+              className="
+                inline-block 
+                px-5 
+                py-2 
+                font-semibold
+                rounded-lg 
+                focus:outline-none
+                hover:bg-gray-300
+                to-indigo-700
+                hover:to-indigo-700"
+              onClick={props.onClick}
+            >
+              Get started
             </button>
-            <button className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">
-                About Hear
+            <button
+              className="
+                inline-block
+                px-5
+                py-2
+                font-semibold
+                text-white
+                rounded-lg
+                focus:outline-none
+                bg-yellow-400
+                hover:bg-gray-300"
+            >
+              About Hear
             </button>
         </div>
         <p className="text-sm text-gray-500">No credit card required. Cancel anytime.</p>
       </div>
       <div className="order-1 col-span-2 md:order-2 xl:col-span-3">
-        <Image src={nodata} className="rounded-lg shadow-2xl" alt="" />
+        <Image src={headerPNG} className="rounded-lg shadow-2xl" alt="" />
       </div>
     </div>
   </div>

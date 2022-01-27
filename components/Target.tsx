@@ -7,7 +7,7 @@ export default function Target () {
     const targetContext = useContext(Context)
 
   return (
-    <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+    <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
       <article className="overflow-hidden rounded-lg shadow-lg">
         { targetContext.ogp_url &&
           <img className="block h-auto w-full" src={targetContext.ogp_url} alt="ogpImage" />
@@ -20,17 +20,17 @@ export default function Target () {
             </h1>
         </header>
 
-        <div className="w-full bg-gray-400 rounded-full md:w-auto mx-1">
+        {/* <div className="flex bg-gray-400 rounded-full md:w-auto mx-1">
             <div className="bg-green-500 text-xs font-medium text-white text-center leading-none rounded-full" style={{'width' : `${String(targetContext.value)}%`}}>
                 { targetContext.value }%
             </div>
-        </div>
+        </div> */}
 
         <footer className="flex items-center justify-between leading-none p-2 md:p-4">
             <a className="flex items-center no-underline hover:underline text-black" href="#">
-                { targetContext.avater_url &&
+                {/* { targetContext.avater_url &&
                   <img className="w-10 h-10 rounded-full mr-4" src={targetContext.avater_url} alt="Avatar of Jonathan Reinink" />
-                 }
+                 } */}
                 <div className="text-sm">
                     <p className="text-gray-900 leading-none">{ targetContext.user_name }</p>
                     <p className="text-gray-600">{ targetContext.created_date }</p>
