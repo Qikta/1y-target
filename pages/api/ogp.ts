@@ -52,7 +52,7 @@ const createOgp = async (
     }
 
     const lineWidth = Math.max(...lines.map((line) => line.width))
-    const lineHeight = 84 * 1.25
+    const lineHeight = 84 * 1.5
   
     // 1行の時は中央寄せ、2行以上の時は左寄せ
     const x = lines.length > 1 ? (WIDTH - lineWidth) / 2 : WIDTH / 2
