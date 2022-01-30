@@ -14,7 +14,7 @@ import { supabase } from '../utils/supabaseClient'
 const Home: NextPage = (props: any) => {
 
   return (
-    <div className="container flex justify-around py-8 mx-auto">
+    <div className="container justify-around mx-auto">
       <main>
         <TopSection onClick={props.onClick} />
         <TargetList />

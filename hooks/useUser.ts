@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router';
 import { SetStateAction, useEffect, useState } from 'react';
 import { definitions } from '../types/entities/supabase';
+import { generateOgpPath } from '../utils/generateOgpPath';
 import { supabase } from '../utils/supabaseClient'
+import { removeBucketPath } from '../utils/supabaseStorage';
 
 export interface IProfile {
   id: string
@@ -12,11 +15,22 @@ export interface IProfile {
   website?: string
 }
 
+export interface IProfileForm {
+  id: string
+  username: string
+  avatar?: File
+  self_description?: string
+  twitter_url?: string
+  instagram_url?: string
+  website?: string
+}
+
 export default function useUser() {
   const [session, setSession] = useState()
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState<IProfile>();
+  const router = useRouter()
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -87,17 +101,60 @@ export default function useUser() {
     }
   }, [])
 
-  const insertProfile =async (request: IProfile) => {
+  const insertProfile =async (request: IProfileForm) => {
     const user = supabase.auth.user()
-
-    if (user !== null) {
+    try {
       setLoading(true);
+      if (user !== null) {
+        const formatRequest: IProfile = {
+          id: request.id,
+          username: request.username,
+          self_description: request.self_description || undefined,
+          twitter_url: request.twitter_url || undefined,
+          instagram_url: request.instagram_url || undefined,
+          website: request.website || undefined
+        } 
 
-      const { error } = await supabase.from('profiles').insert([request])
+        if (request.avatar) {
+          const file = request.avatar
+          // const fileExt = file.name.split('.').pop()
+          // const fileName = `${Math.random()}.${fileExt}`
+          // const filePath = `${fileName}.png`
+          const filePath = generateOgpPath();
+  
+          let {data: inputData ,error: uploadError } = await supabase.storage
+            .from('avatars')
+            .upload(`${filePath}.png`, request.avatar, {
+              contentType: 'image/png',
+              cacheControl: '3600',
+              upsert: false
+            })
+  
+          if (uploadError) {
+            throw uploadError
+          }
+          
+          const key = inputData?.Key
+          if (!key) { throw new Error('storage key is undefined')}
 
-      if (error) { throw error}
+          const { data, error: err } = await supabase.storage.from('avatars').getPublicUrl(removeBucketPath(key, "avatars"))
+          if (err) { throw err }
 
-        location.reload()
+          formatRequest.avatar_url = data?.publicURL
+        }
+  
+        const { error } = await supabase.from('profiles').upsert([formatRequest])
+  
+        if (error) { throw error}
+  
+        router.push('/')
+      } else {
+        alert('loginしてください。')
+      }
+    } catch (err) {
+      alert(err)
+    } finally {
+      setLoading(false)
     }
   }
 
