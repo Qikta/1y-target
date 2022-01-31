@@ -29,7 +29,7 @@ const createOgp = async (
     registerFont(path.resolve("./fonts/851MkPOP_100.ttf"), {
       family: "851MkPOP",
     });
-    ctx.font = "84px 851MkPOP";
+    ctx.font = "80px 851MkPOP";
     ctx.fillStyle = "#000000";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -52,15 +52,14 @@ const createOgp = async (
     }
 
     const lineWidth = Math.max(...lines.map((line) => line.width))
-    const lineHeight = 84 * 1.5
+    const lineHeight = 80 * 1.2
   
     // 1行の時は中央寄せ、2行以上の時は左寄せ
     const x = lines.length > 1 ? (WIDTH - lineWidth) / 2 : WIDTH / 2
     ctx.textAlign = lines.length > 1 ? 'left' : 'center'
   
     lines.forEach((line, index) => {
-      const y =
-        index * lineHeight + HEIGHT / 2.1 - (lineHeight / 2) * (lines.length - 1)
+      const y = index * lineHeight + HEIGHT / 1.8 - (lineHeight / 2) * (lines.length - 1)
       ctx.fillText(line.text, x, y)
     })
 
