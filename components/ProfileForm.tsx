@@ -14,35 +14,6 @@ export default function ProfileForm () {
     insertProfile(data)
   }
 
-  async function uploadAvatar(event: any) {
-    try {
-      setUploading(true)
-
-      if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
-      }
-
-      const file = event.target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
-      const filePath = `${fileName}`
-
-      let { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file)
-
-      if (uploadError) {
-        throw uploadError
-      }
-
-      // onUpload(filePath)
-    } catch (err) {
-      alert(err.message)
-    } finally {
-      setUploading(false)
-    }
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="md:flex md:items-center mb-6">
@@ -58,7 +29,6 @@ export default function ProfileForm () {
             type="file"
             accept="image/*"
             {...register('avatar')}
-            onChange={uploadAvatar}
           />
         </div>
       </div>
