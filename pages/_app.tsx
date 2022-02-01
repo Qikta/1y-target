@@ -7,8 +7,6 @@ import useModal from '../hooks/useModal'
 import { createContext, useCallback, useState } from 'react'
 import useUser from '../hooks/useUser'
 
-export const ModalContext = createContext<[]>({})
-
 function MyApp({ Component, pageProps }: AppProps) {
   const { toggle, open, close } = useModal()
 
