@@ -35,7 +35,7 @@ export const TopSection = (props: any) => {
                 text-white
                 rounded-lg
                 focus:outline-none
-                bg-yellow-400
+                bg-amber-400
                 hover:bg-gray-300"
             >
               About Hear
