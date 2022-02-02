@@ -6,6 +6,7 @@ import ModalContent from '../components/ModalContent'
 import useModal from '../hooks/useModal'
 import { createContext, useCallback, useState } from 'react'
 import useUser from '../hooks/useUser'
+import '@uiw/react-heat-map/dist.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toggle, open, close } = useModal()
