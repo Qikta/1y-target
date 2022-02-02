@@ -3,6 +3,7 @@ import { supabase } from "../utils/supabaseClient"
 // @ts-ignore
 import Modal from 'react-modal'
 import { useState } from "react";
+import Link from "next/link";
 
 // スタイリング
 const customStyles = {
@@ -43,9 +44,9 @@ export default function Header(props: any) {
     <nav className="container flex justify-between py-8 px-4 mx-auto bg-white max-w-screen-lg">
       <div className="flex items-center">
         {/* <h2 className="text-3xl font-medium">One Year Target</h2> */}
-        <a href="#">
+        <Link href="/" passHref>
           <h2 className="text-3xl font-medium">One Year Target</h2>
-        </a>
+        </Link>
       </div>
       <div className="flex justify-end items-center space-x-2">
         {/* <a href="#">
