@@ -4,3 +4,9 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+const removeImports = require("next-remove-imports")({
+  options: { },
+});
+
+module.exports = removeImports()
