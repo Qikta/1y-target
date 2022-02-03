@@ -97,7 +97,7 @@ const Main = ({ post}) => {
         pageImgWidth={1280}
         pageImgHeight={960}
       />
-      <div className="container px-5 py-24 mx-auto flex flex-col">
+      <div className="container px-5 py-5 mx-auto flex flex-col">
         <div className="lg:w-4/6 mx-auto">
           <div className="overflow-hidden">
             { target.ogp_url &&
@@ -120,26 +120,23 @@ const Main = ({ post}) => {
             </div>
           </div>
         </div>
-        <div className="lg:w-4/6 mx-auto">
-          <div className="flex flex-col sm:flex-row mx-auto mt-10 text-center">
-            {/* @ts-ignore */}
-            <HeatMap value={ heatmapValue }
-              width={725}
-              style={{ color: '#ad001d' }}
-              panelColors={{
-                0: '#f4decd',
-                2: '#e4b293',
-                4: '#d48462',
-                10: '#c2533a',
-                20: '#ad001d',
-                30: '#000',
-              }}
-              weekLabels={[,'Mon',,'Wed',,'Fri',]}
-              startDate={new Date('2022/01/01')}
-            />
-          </div>
+        <div className="mt-10 mx-auto sm:w-full md:w-full lg:w-4/6">
+          {/* @ts-ignore */}
+          <HeatMap value={ heatmapValue }
+            style={{ color: '#a3a3a3', width: '100%' }}
+            panelColors={{
+              0: '#f3f4f6',
+              2: '#fef3c7',
+              4: '#fde68a',
+              10: '#fbbf24',
+              20: '#d97706',
+              30: '#78350f',
+            }}
+            weekLabels={[,'Mon',,'Wed',,'Fri',]}
+            startDate={new Date('2022/01/01')}
+          />
         </div>
-        <div>
+        <div className="lg:w-4/6 mx-auto">
         <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.name }>
           <TwitterIcon size={30} round={true} />
         </TwitterShareButton>
