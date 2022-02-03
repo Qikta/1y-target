@@ -25,11 +25,11 @@ export default function Target () {
               </h1>
           </header>
 
-          {/* <div className="flex bg-gray-400 rounded-full md:w-auto mx-1">
+          <div className="flex bg-gray-400 rounded-full md:w-auto mx-1">
               <div className="bg-green-500 text-xs font-medium text-white text-center leading-none rounded-full" style={{'width' : `${String(targetContext.value)}%`}}>
                   { targetContext.value }%
               </div>
-          </div> */}
+          </div>
 
           <footer className="flex items-center justify-between leading-none p-2 md:p-4">
               <a className="flex items-center no-underline hover:underline text-black" href="#">

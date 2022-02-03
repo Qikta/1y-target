@@ -104,6 +104,7 @@ const Main = ({ post}) => {
               <img alt="content" className="object-cover object-center h-full w-full" src={target.ogp_url} />
             }
           </div>
+          
           <div className="flex flex-col sm:flex-row mt-10">
             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
               <img alt="content" className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400" src={target.avater_url} />
@@ -114,32 +115,53 @@ const Main = ({ post}) => {
               </div>
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
+              <h2 className="leading-relaxed text-lg mb-4">{ target.name }</h2>
               <p className="leading-relaxed text-lg mb-4">
                 { target.description }
               </p>
             </div>
           </div>
-        </div>
-        <div className="mt-10 mx-auto sm:w-full md:w-full lg:w-4/6">
-          {/* @ts-ignore */}
-          <HeatMap value={ heatmapValue }
-            style={{ color: '#a3a3a3', width: '100%' }}
-            panelColors={{
-              0: '#f3f4f6',
-              2: '#fef3c7',
-              4: '#fde68a',
-              10: '#fbbf24',
-              20: '#d97706',
-              30: '#78350f',
-            }}
-            weekLabels={[,'Mon',,'Wed',,'Fri',]}
-            startDate={new Date('2022/01/01')}
-          />
-        </div>
-        <div className="lg:w-4/6 mx-auto">
-        <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.name }>
-          <TwitterIcon size={30} round={true} />
-        </TwitterShareButton>
+
+          <div className="relative pt-1">
+            <div className="flex my-2 items-center justify-between">
+              <div>
+                <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-amber-600 bg-amber-200">
+                  Task in progress
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-xs font-semibold inline-block text-amber-600">
+                  { target.value }%
+                </span>
+              </div>
+            </div>
+            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
+              <div style={{ width: `${target.value}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-amber-500"></div>
+            </div>
+          </div>
+          
+          <div className="flex justify-center sm:py-8 mx-auto">
+            {/* @ts-ignore */}
+            <HeatMap value={ heatmapValue }
+              style={{ color: '#a3a3a3', width: '100%'}}
+              panelColors={{
+                0: '#f3f4f6',
+                2: '#fef3c7',
+                4: '#fde68a',
+                10: '#fbbf24',
+                20: '#d97706',
+                30: '#78350f',
+              }}
+              weekLabels={[,'Mon',,'Wed',,'Fri',]}
+              startDate={new Date('2022/01/01')}
+            />
+          </div>
+
+          <div className="flex justify-center mx-auto">
+            <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.name }>
+              <TwitterIcon size={30} round={true} />
+            </TwitterShareButton>
+          </div>
         </div>
       </div>
     </>
