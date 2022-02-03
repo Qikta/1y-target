@@ -4,6 +4,7 @@ import { ITarget } from "../../../../hooks/useTarget";
 import { definitions } from "../../../../types/entities/supabase";
 import { supabase } from "../../../../utils/supabaseClient";
 import dynamic from "next/dynamic";
+import { HeatMapValue } from "@uiw/react-heat-map";
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
@@ -54,7 +55,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 // @ts-ignore
-const Main = ({ post }) => {
+const Main = ({ post}) => {
   const seriarisePost = JSON.parse(post)
 
   const optionalCreateTiem = seriarisePost.created_at !== undefined ? new Date(seriarisePost.created_at) : undefined
@@ -72,14 +73,14 @@ const Main = ({ post }) => {
     ogp_url: seriarisePost.ogp_url
   }
 
-  const heatmapValue = [
+  const heatmapValue: Array<HeatMapValue> = [
     { date: '2022/01/11', count:2, content: '' },
     { date: '2022/04/12', count:2, content: '' },
     { date: '2022/05/01', count:5, content: '' },
     { date: '2022/05/02', count:5, content: '' },
     { date: '2022/05/03', count:1, content: '' },
     { date: '2022/05/04', count:11, content: '' },
-    { date: '2022/05/08', count:32, content: '' },
+    { date: '2022/05/08', count:32, content: '' }
   ];
   
   
@@ -109,8 +110,8 @@ const Main = ({ post }) => {
       </div>
       <div className="lg:w-4/6 mx-auto">
         <div className="flex flex-col sm:flex-row mx-auto mt-10 text-center">
-          <HeatMap
-            value={ heatmapValue }
+          {/* @ts-ignore */}
+          <HeatMap value={ heatmapValue }
             width={725}
             style={{ color: '#ad001d' }}
             panelColors={{
