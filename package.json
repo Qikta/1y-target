@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "now-build": "yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/ && npm run build",
+    "now-build": "cp canvas_lib64/*so.1 node_modules/canvas/build/Release/&& npm run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
