@@ -10,33 +10,33 @@ import Seo from "../../../../components/SeoHeader"
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
-interface PathParams {
-  id: string
-}
+// interface PathParams {
+//   id: string
+// }
 
-export const getStaticPaths = async () => {
-  try {
-    const {data, error} = await supabase.from<definitions['target_view']>('target_view').select('*') 
-    if (error) {
-      throw error
-    }
+// export const getStaticPaths = async () => {
+//   try {
+//     const {data, error} = await supabase.from<definitions['target_view']>('target_view').select('*') 
+//     if (error) {
+//       throw error
+//     }
 
-    if (data) {
-      const paths = data.map((post) => ({
-        params: {
-          username: String(post.username),
-          target_id: String(post.id)
-        },
-      }))
-      return { paths, fallback: false }
-    }
-  } catch (err) {
-    alert (err)
-  } 
-}
+//     if (data) {
+//       const paths = data.map((post) => ({
+//         params: {
+//           username: String(post.username),
+//           target_id: String(post.id)
+//         },
+//       }))
+//       return { paths, fallback: false }
+//     }
+//   } catch (err) {
+//     alert (err)
+//   } 
+// }
 
 // @ts-ignore
-export const getStaticProps = async ({ params }) => { 
+export const getServerSideProps = async ({ params }) => { 
   // ${path.id}とすることで引数pathのidごとのデータを取得する 
   const {data, error} = await supabase
     .from<definitions['target_view']>('target_view')
