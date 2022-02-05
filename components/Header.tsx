@@ -5,40 +5,11 @@ import Modal from 'react-modal'
 import { useState } from "react";
 import Link from "next/link";
 
-// スタイリング
-const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    backgroundColor: "rgba(0,0,0,0.3)"
-  },
-
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    width                 : '500px',
-    height                : '300px',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
 export default function Header(props: any) {
-  const { signOut, signInWithGoogle } = useUser()
+  const { signOut, signInWithGoogle, profile } = useUser()
   const [modalIsOpen,setIsOpen] = useState(false)
   const session = supabase.auth.session()
 
-  // モーダルを開く処理
-  const openModal = () => {
-    setIsOpen(true)
-  }
-  // モーダルを閉じる処理
-  const closeModal = () => {
-    setIsOpen(false)
-  }
   return (
     <header>
     <nav className="container flex justify-between py-8 px-4 mx-auto bg-white max-w-screen-lg">
@@ -84,10 +55,15 @@ export default function Header(props: any) {
             />
           </svg>
         </a> */}
-        <button className="p-2 rounded-full bg-blue-50" onClick={openModal}>
-          <svg
+        <button className="rounded-full bg-gray-200">
+          { profile ?
+          <Link href={{pathname: '/[username]', query: { username: profile.username }}} passHref>
+            <img className="w-10 h-10 rounded-full m-1" src={profile.avatar_url} alt="Avatar of Jonathan Reinink" />  
+          </Link>
+        :
+        <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 text-gray-200"
+            className="w-6 h-6 text-gray-500 m-2"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -99,18 +75,9 @@ export default function Header(props: any) {
               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
             />
           </svg>
+        
+        }
         </button>
-        <Modal
-          // isOpenがtrueならモダールが起動する
-          isOpen={modalIsOpen}
-          // モーダルを閉じる処理を定義
-          onRequestClose={closeModal}
-          // スタイリングを定義
-          style={customStyles}
-        >
-          <h2>Hello</h2>
-          <button onClick={closeModal}>close</button>
-        </Modal>
         { session ?
           <button 
             className="
