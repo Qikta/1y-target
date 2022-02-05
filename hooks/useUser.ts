@@ -37,7 +37,6 @@ export default function useUser() {
       (event, session) => {
         // @ts-ignore
         setSession(session)
-        router.push('/')
       }
     );
 
