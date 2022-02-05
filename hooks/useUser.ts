@@ -37,6 +37,7 @@ export default function useUser() {
       (event, session) => {
         // @ts-ignore
         setSession(session)
+        router.push('/')
       }
     );
 
@@ -44,24 +45,26 @@ export default function useUser() {
       // @ts-ignore
       authListener.unsubscribe()
     }
-  }, [session])
+  }, [])
 
-  // useEffect(() => {
-  //   const setupUser = async () => {
-  //     // @ts-ignore
-  //     if (session?.user.id) {
-  //       const { data: user, error } = await supabase
-  //         .from("users")
-  //         .select("*")
-  //         // @ts-ignore
-  //         .eq("id", session.user.id)
-  //         .single();
-  //       if (error) {throw error}
-  //       setUser(user);
-  //     }
-  //   };
-  //   setupUser();
-  // }, [session]);
+  useEffect(() => {
+    const setupUser = async () => {
+      // @ts-ignore
+      if (session?.user.id) {
+        const { data: user, error } = await supabase
+          .from("users")
+          .select("*")
+          // @ts-ignore
+          .eq("id", session.user.id)
+          .single();
+        if (error) {
+          throw error
+        }
+        setUser(user);
+      }
+    };
+    setupUser();
+  }, [user]);
 
   useEffect(() => {
     const setUpProfile = async () => {
@@ -74,9 +77,10 @@ export default function useUser() {
             .select('*')
             .eq('id', user?.id)
             .single()
-  
+
           if (error && status !== 406) {
             throw error
+            router.push('/onboarding')
           }
   
           if (data) {
@@ -90,6 +94,7 @@ export default function useUser() {
               website: data.website
             }
             setProfile(profile)
+            
           }
         } catch(err) {
           alert(err)
@@ -97,9 +102,9 @@ export default function useUser() {
           setLoading(false)
         }
       }
-      setUpProfile()
     }
-  }, [])
+    setUpProfile();
+  }, [profile])
 
   const insertProfile =async (request: IProfileForm) => {
     const user = supabase.auth.user()
