@@ -35,7 +35,7 @@ export default function Target () {
           </div>
 
           <footer className="flex items-center justify-between leading-none p-2 md:p-4">
-            <div className="flex items-center no-underline hover:underline text-black" href="#">
+            <div className="flex items-center no-underline hover:underline text-black">
               <Link href={{pathname: '/[username]', query: { username: targetContext.user_name }}} passHref>
                 { targetContext.avater_url &&
                   <img className="w-10 h-10 rounded-full mr-4" src={targetContext.avater_url} alt="Avatar of Jonathan Reinink" />
