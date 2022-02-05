@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { HeatMapValue } from "@uiw/react-heat-map";
 import { TwitterShareButton, FacebookShareButton, LineShareButton, HatenaShareButton, TwitterIcon, FacebookIcon, LineIcon, HatenaIcon } from "react-share";
 import Seo from "../../../../components/SeoHeader"
+import Link from "next/link";
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
@@ -107,9 +108,13 @@ const Main = ({ post}) => {
           
           <div className="flex flex-col sm:flex-row mt-10">
             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
-              <img alt="content" className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400" src={target.avater_url} />
+              <Link href={{pathname: '/[username]', query: { username: target.user_name }}} passHref>
+                <img alt="content" className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400" src={target.avater_url} />
+              </Link>
               <div className="flex flex-col items-center text-center justify-center">
-                <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{ target.user_name }</h2>
+                <Link href={{pathname: '/[username]', query: { username: target.user_name }}} passHref>
+                  <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{ target.user_name }</h2>
+                </Link>
                 <div className="w-12 h-1 bg-amber-400 rounded mt-2 mb-4"></div>
                 <p className="text-base">Raclette knausgaard hella meggs normcore williamsburg enamel pin sartorial venmo tbh hot chicken gentrify portland.</p>
               </div>
@@ -140,10 +145,11 @@ const Main = ({ post}) => {
             </div>
           </div>
           
-          <div className="flex justify-center sm:py-8 mx-auto">
+          <div className="flex justify-center sm:py-8 mx-auto overflow-hidden">
             {/* @ts-ignore */}
             <HeatMap value={ heatmapValue }
-              style={{ color: '#a3a3a3', width: '100%'}}
+              style={{ color: '#a3a3a3'}}
+              width={722}
               panelColors={{
                 0: '#f3f4f6',
                 2: '#fef3c7',

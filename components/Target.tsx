@@ -9,11 +9,14 @@ export default function Target () {
     const targetContext = useContext(Context)
     const router = useRouter()
 
+    const targetStyle = !targetContext.is_complete ? 
+      'overflow-hidden rounded-lg shadow-lg' : 'overflow-hidden rounded-lg shadow-lg outline outline-green-400'
+
   return (
     <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
       <Link href={{ pathname: '/[username]/targets/[target_id]',
             query: { username: targetContext.user_name, target_id: targetContext.id }}} passHref>
-        <article className="overflow-hidden rounded-lg shadow-lg">
+        <article className={targetStyle}>
           { targetContext.ogp_url &&
             <img className="block h-auto w-full" src={targetContext.ogp_url} alt="ogpImage" />
           }
@@ -32,19 +35,23 @@ export default function Target () {
           </div>
 
           <footer className="flex items-center justify-between leading-none p-2 md:p-4">
-              <a className="flex items-center no-underline hover:underline text-black" href="#">
-                  {/* { targetContext.avater_url &&
-                    <img className="w-10 h-10 rounded-full mr-4" src={targetContext.avater_url} alt="Avatar of Jonathan Reinink" />
-                  } */}
-                  <div className="text-sm">
-                      <p className="text-gray-900 leading-none">{ targetContext.user_name }</p>
-                      <p className="text-gray-600">{ targetContext.created_date }</p>
-                  </div>
-              </a>
-              <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
-                  <span className="hidden">Like</span>
-                  <FontAwesomeIcon icon={faHeart} />
-              </a>
+            <div className="flex items-center no-underline hover:underline text-black" href="#">
+              <Link href={{pathname: '/[username]', query: { username: targetContext.user_name }}} passHref>
+                { targetContext.avater_url &&
+                  <img className="w-10 h-10 rounded-full mr-4" src={targetContext.avater_url} alt="Avatar of Jonathan Reinink" />
+                }
+              </Link>
+              <div className="text-sm">
+                <Link href={{pathname: '/[username]', query: { username: targetContext.user_name }}} passHref>
+                  <p className="text-gray-900 leading-none">{ targetContext.user_name }</p>
+                </Link>
+                <p className="text-gray-600">{ targetContext.created_date }</p>
+              </div>
+            </div>
+            <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
+              <span className="hidden">Like</span>
+              <FontAwesomeIcon icon={faHeart} />
+            </a>
           </footer>
         </article>
       </Link>
