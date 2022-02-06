@@ -63,7 +63,7 @@ export default function useUser() {
       }
     };
     setupUser();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     const setUpProfile = async () => {
@@ -71,15 +71,15 @@ export default function useUser() {
       if (user) {
         try {
           setLoading(true);
-          let { data, error, status } = await supabase
+          let { data, error} = await supabase
             .from<definitions['profiles']>('profiles')
             .select('*')
-            .eq('id', user?.id)
+            .match({id: user?.id})
             .single()
 
-          if (error && status !== 406) {
-            throw error
+          if (error) {
             router.push('/onboarding')
+            throw error
           }
   
           if (data) {
@@ -93,7 +93,6 @@ export default function useUser() {
               website: data.website
             }
             setProfile(profile)
-            
           }
         } catch(err) {
           alert(err)
@@ -103,51 +102,14 @@ export default function useUser() {
       }
     }
     setUpProfile();
-  }, [profile])
+  }, [router.pathname])
 
-  const insertProfile =async (request: IProfileForm) => {
+  const insertProfile =async (request: IProfile) => {
     const user = supabase.auth.user()
     try {
       setLoading(true);
       if (user !== null) {
-        const formatRequest: IProfile = {
-          id: request.id,
-          username: request.username,
-          self_description: request.self_description || undefined,
-          twitter_url: request.twitter_url || undefined,
-          instagram_url: request.instagram_url || undefined,
-          website: request.website || undefined
-        } 
-
-        if (request.avatar) {
-          const file = request.avatar
-          // const fileExt = file.name.split('.').pop()
-          // const fileName = `${Math.random()}.${fileExt}`
-          // const filePath = `${fileName}.png`
-          const filePath = generateOgpPath();
-  
-          let {data: inputData ,error: uploadError } = await supabase.storage
-            .from('avatars')
-            .upload(`${filePath}.png`, request.avatar, {
-              contentType: 'image/png',
-              cacheControl: '3600',
-              upsert: false
-            })
-  
-          if (uploadError) {
-            throw uploadError
-          }
-          
-          const key = inputData?.Key
-          if (!key) { throw new Error('storage key is undefined')}
-
-          const { data, error: err } = await supabase.storage.from('avatars').getPublicUrl(removeBucketPath(key, "avatars"))
-          if (err) { throw err }
-
-          formatRequest.avatar_url = data?.publicURL
-        }
-  
-        const { error } = await supabase.from('profiles').upsert([formatRequest])
+        const { error } = await supabase.from('profiles').upsert([request])
   
         if (error) { throw error}
   
@@ -182,6 +144,7 @@ export default function useUser() {
     signInWithGithub,
     signOut,
     profile,
+    loading,
     insertProfile
   };
 }
