@@ -1,17 +1,52 @@
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import useUser, { IProfile, IProfileForm } from "../hooks/useUser"
+import { generateOgpPath } from '../utils/generateOgpPath'
 import { supabase } from '../utils/supabaseClient'
+import { removeBucketPath } from '../utils/supabaseStorage'
 
 export default function ProfileForm () {
-  const { insertProfile } = useUser()
-  const { register, handleSubmit } = useForm<IProfileForm>()
-  const [avatarUrl, setAvatarUrl] = useState(null)
+  const { insertProfile, profile } = useUser()
+  const { register, handleSubmit } = useForm<IProfile>()
+  const [avatarUrl, setAvatarUrl] = useState<string>()
   const [uploading, setUploading] = useState(false)
 
-  const onSubmit: SubmitHandler<IProfileForm> = (data) => {
+  const onSubmit: SubmitHandler<IProfile> = (data) => {
     data.id = String(supabase.auth.user()?.id)
+    data.avatar_url = avatarUrl
     insertProfile(data)
+  }
+
+  const upload = async (event: any) => {
+    try {
+      if (!event.target.files || event.target.files.length === 0) {
+        throw new Error('You must select an image to upload.')
+      }
+  
+      const file = event.target.files[0]
+      const filePath = generateOgpPath();
+      let {data: inputData ,error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(`${filePath}.png`, file, {
+          contentType: 'image/png',
+          cacheControl: '3600',
+          upsert: false
+        })
+      
+      if (uploadError) {
+        throw uploadError
+      }
+      
+      const key = inputData?.Key
+      if (!key) { throw new Error('storage key is undefined')}
+  
+      const { data, error: err } = await supabase.storage.from('avatars').getPublicUrl(removeBucketPath(key, "avatars"))
+      if (err) { throw err }
+  
+      setAvatarUrl(data?.publicURL)
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   return (
@@ -28,7 +63,7 @@ export default function ProfileForm () {
             id="avatar_url" 
             type="file"
             accept="image/*"
-            {...register('avatar')}
+            onChange={upload}
           />
         </div>
       </div>
@@ -43,6 +78,7 @@ export default function ProfileForm () {
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
             id="user-name" 
             type="text" 
+            defaultValue={profile?.username}
             {...register('username', { required: true })}
           />
         </div>
@@ -58,6 +94,7 @@ export default function ProfileForm () {
             rows={10}
             placeholder="whrite here.."
             className="w-full p-4 bg-gray-100 outline-none rounded-md"
+            defaultValue={profile?.self_description}
             {...register('self_description')}
             />
         </div>
@@ -73,6 +110,7 @@ export default function ProfileForm () {
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
             id="twitter" 
             type="text" 
+            defaultValue={profile?.twitter_url}
             {...register('twitter_url')}
           />
         </div>
@@ -88,6 +126,7 @@ export default function ProfileForm () {
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
             id="instagram" 
             type="text" 
+            defaultValue={profile?.instagram_url}
             {...register('instagram_url')}
           />
         </div>
@@ -103,6 +142,7 @@ export default function ProfileForm () {
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
             id="website" 
             type="text" 
+            defaultValue={profile?.website}
             {...register('website')}
           />
         </div>
