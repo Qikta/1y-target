@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
 import Target from '../../components/Target'
 import { Context } from '../../components/TargetList'
 import { ITarget } from '../../hooks/useTarget'
@@ -66,6 +67,8 @@ export const getServerSideProps = async ({ params }) => {
 const Main = ({post}) => {
   const seriarisePost = JSON.parse(post)
   const targetList: Array<ITarget> = []
+  const { profile } = useUser()
+  const router = useRouter()
 
   if(seriarisePost) {
     for (const target of seriarisePost) {
@@ -99,6 +102,11 @@ const Main = ({post}) => {
           <p className="text-base">user description</p>
           <p>{targetList.length}Target</p>
         </div>
+        { profile?.username == userInfo.user_name && 
+        <div className="flex flex-col items-center text-center justify-end ">
+          <button onClick={() => router.push('/settings/profile')}>edit</button>
+        </div>
+        }
       </div>
       <div className="flex flex-wrap -mx-1 lg:-mx-4">
         {
