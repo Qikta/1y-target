@@ -22,9 +22,10 @@ export interface paths {
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
           twitter_url?: parameters["rowFilter.profiles.twitter_url"];
-          instaegram_url?: parameters["rowFilter.profiles.instaegram_url"];
+          instagram_url?: parameters["rowFilter.profiles.instagram_url"];
           sex?: parameters["rowFilter.profiles.sex"];
           age?: parameters["rowFilter.profiles.age"];
+          self_description?: parameters["rowFilter.profiles.self_description"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -81,9 +82,10 @@ export interface paths {
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
           twitter_url?: parameters["rowFilter.profiles.twitter_url"];
-          instaegram_url?: parameters["rowFilter.profiles.instaegram_url"];
+          instagram_url?: parameters["rowFilter.profiles.instagram_url"];
           sex?: parameters["rowFilter.profiles.sex"];
           age?: parameters["rowFilter.profiles.age"];
+          self_description?: parameters["rowFilter.profiles.self_description"];
         };
         header: {
           /** Preference */
@@ -104,9 +106,10 @@ export interface paths {
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
           twitter_url?: parameters["rowFilter.profiles.twitter_url"];
-          instaegram_url?: parameters["rowFilter.profiles.instaegram_url"];
+          instagram_url?: parameters["rowFilter.profiles.instagram_url"];
           sex?: parameters["rowFilter.profiles.sex"];
           age?: parameters["rowFilter.profiles.age"];
+          self_description?: parameters["rowFilter.profiles.self_description"];
         };
         body: {
           /** profiles */
@@ -324,6 +327,45 @@ export interface paths {
       };
     };
   };
+  "/userinfo_view": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.userinfo_view.id"];
+          username?: parameters["rowFilter.userinfo_view.username"];
+          avatar_url?: parameters["rowFilter.userinfo_view.avatar_url"];
+          self_description?: parameters["rowFilter.userinfo_view.self_description"];
+          twitter_url?: parameters["rowFilter.userinfo_view.twitter_url"];
+          instagram_url?: parameters["rowFilter.userinfo_view.instagram_url"];
+          website?: parameters["rowFilter.userinfo_view.website"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["userinfo_view"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
 }
 
 export interface definitions {
@@ -332,6 +374,7 @@ export interface definitions {
      * Format: uuid
      * @description Note:
      * This is a Primary Key.<pk/>
+     * This is a Foreign Key to `userinfo_view.id`.<fk table='userinfo_view' column='id'/>
      */
     id: string;
     /** Format: timestamp with time zone */
@@ -345,11 +388,13 @@ export interface definitions {
     /** Format: text */
     twitter_url?: string;
     /** Format: text */
-    instaegram_url?: string;
+    instagram_url?: string;
     /** Format: smallint */
-    sex: number;
+    sex?: number;
     /** Format: integer */
-    age: number;
+    age?: number;
+    /** Format: text */
+    self_description?: string;
   };
   target_view: {
     /**
@@ -384,7 +429,11 @@ export interface definitions {
      * This is a Primary Key.<pk/>
      */
     id: number;
-    /** Format: uuid */
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Foreign Key to `userinfo_view.id`.<fk table='userinfo_view' column='id'/>
+     */
     user_id: string;
     /** Format: text */
     name: string;
@@ -433,6 +482,26 @@ export interface definitions {
     username?: string;
     /** Format: text */
     avatar_url?: string;
+  };
+  userinfo_view: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: string;
+    /** Format: text */
+    username?: string;
+    /** Format: text */
+    avatar_url?: string;
+    /** Format: text */
+    self_description?: string;
+    /** Format: text */
+    twitter_url?: string;
+    /** Format: text */
+    instagram_url?: string;
+    /** Format: text */
+    website?: string;
   };
 }
 
@@ -484,11 +553,13 @@ export interface parameters {
   /** Format: text */
   "rowFilter.profiles.twitter_url": string;
   /** Format: text */
-  "rowFilter.profiles.instaegram_url": string;
+  "rowFilter.profiles.instagram_url": string;
   /** Format: smallint */
   "rowFilter.profiles.sex": string;
   /** Format: integer */
   "rowFilter.profiles.age": string;
+  /** Format: text */
+  "rowFilter.profiles.self_description": string;
   /** @description target_view */
   "body.target_view": definitions["target_view"];
   /** Format: bigint */
@@ -557,6 +628,22 @@ export interface parameters {
   "rowFilter.targets_info_view.username": string;
   /** Format: text */
   "rowFilter.targets_info_view.avatar_url": string;
+  /** @description userinfo_view */
+  "body.userinfo_view": definitions["userinfo_view"];
+  /** Format: uuid */
+  "rowFilter.userinfo_view.id": string;
+  /** Format: text */
+  "rowFilter.userinfo_view.username": string;
+  /** Format: text */
+  "rowFilter.userinfo_view.avatar_url": string;
+  /** Format: text */
+  "rowFilter.userinfo_view.self_description": string;
+  /** Format: text */
+  "rowFilter.userinfo_view.twitter_url": string;
+  /** Format: text */
+  "rowFilter.userinfo_view.instagram_url": string;
+  /** Format: text */
+  "rowFilter.userinfo_view.website": string;
 }
 
 export interface operations {}

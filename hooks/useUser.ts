@@ -72,27 +72,30 @@ export default function useUser() {
         try {
           setLoading(true);
           let { data, error} = await supabase
-            .from<definitions['profiles']>('profiles')
+            .from<definitions['userinfo_view']>('userinfo_view')
             .select('*')
             .match({id: user?.id})
             .single()
 
           if (error) {
-            router.push('/onboarding')
             throw error
           }
-  
-          if (data) {
-            const profile: IProfile = {
-              id: user?.id || '',
-              username: data.username,
-              avatar_url: data.avatar_url,
-              self_description: '',
-              twitter_url: data.twitter_url,
-              instagram_url: data.instaegram_url,
-              website: data.website
+
+          if (!data?.username) {
+            router.push('/onboarding')
+          } else {
+            if (data) {
+              const profile: IProfile = {
+                id: user?.id || '',
+                username: data.username,
+                avatar_url: data.avatar_url,
+                self_description: '',
+                twitter_url: data.twitter_url,
+                instagram_url: data.instagram_url,
+                website: data.website
+              }
+              setProfile(profile)
             }
-            setProfile(profile)
           }
         } catch(err) {
           alert(err)
