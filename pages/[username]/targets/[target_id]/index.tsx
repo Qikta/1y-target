@@ -11,9 +11,6 @@ import Link from "next/link";
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
-// interface PathParams {
-//   id: string
-// }
 
 // export const getStaticPaths = async () => {
 //   try {
@@ -145,9 +142,9 @@ const Main = ({ post}) => {
             </div>
           </div>
           
-          <div className="flex justify-center sm:py-8 mx-auto overflow-hidden">
+          {/* <div className="flex items-end justify-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm sm:py-8  overflow-hidden relative"> */}
             {/* @ts-ignore */}
-            <HeatMap value={ heatmapValue }
+            {/* <HeatMap value={ heatmapValue }
               style={{ color: '#a3a3a3'}}
               width={722}
               panelColors={{
@@ -161,7 +158,7 @@ const Main = ({ post}) => {
               weekLabels={[,'Mon',,'Wed',,'Fri',]}
               startDate={new Date('2022/01/01')}
             />
-          </div>
+          </div> */}
 
           <div className="flex justify-center mx-auto">
             <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.name }>
