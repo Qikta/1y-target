@@ -87,12 +87,13 @@ export default function TargetForm (props: any) {
                         </div>
                         <div>
                             <input 
+                              id='is_complete'
                               type="checkbox"
                               className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" 
                               defaultValue={props?.target?.targetDetail.is_complete}
                               {...register('targetDetail.is_complete')}  
                             />
-                            <label htmlFor="">is Successd?</label>
+                            <label htmlFor="is_complete">is Successd?</label>
                         </div>
                     </div>
                     <button type='submit' className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">

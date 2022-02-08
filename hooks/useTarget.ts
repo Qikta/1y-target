@@ -120,7 +120,7 @@ export default function useTarget() {
 
         if (error) { throw error}
 
-        location.reload()
+        router.push(`${request.user_name}`)
       } catch(err) {
         alert(err)
       } finally {

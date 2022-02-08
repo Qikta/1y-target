@@ -50,7 +50,7 @@ export const getServerSideProps = async ({ params }) => {
   const {data, error} = await supabase
     .from<definitions['user_target_view']>('user_target_view')
     .select('*')
-    .eq('user_name', String(params.user_name))
+    .eq('user_name', String(params.user))
   
   if (error) { throw error }
   const post = JSON.stringify(data)
