@@ -67,7 +67,8 @@ export default function Target () {
             </div>
             <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
               <span className="hidden">Like</span>
-              <FontAwesomeIcon icon={faHeart} />
+              {/* @ts-ignore */}
+              <FontAwesomeIcon icon={faHeart}  />
             </a>
           </footer>
         </article>
