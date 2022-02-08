@@ -9,6 +9,8 @@ import { TwitterShareButton, FacebookShareButton, LineShareButton, HatenaShareBu
 import Seo from "../../../../components/SeoHeader"
 import Link from "next/link";
 import useUser from "../../../../hooks/useUser";
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
@@ -61,7 +63,7 @@ const Main = ({ post}) => {
   const { profile } = useUser()
   const router = useRouter()
   const optionalCreateTiem = seriarisePost.created_at !== undefined ? new Date(seriarisePost.created_at) : undefined
-
+  const { width, height } = useWindowSize()
   const target: ITarget = {
     id: String(seriarisePost.id),
     title: seriarisePost?.title || '',
@@ -101,6 +103,13 @@ const Main = ({ post}) => {
         pageImgWidth={1280}
         pageImgHeight={960}
       />
+      { target.is_complete &&
+        <Confetti
+          width={width}
+          height={height}
+          recycle={true}
+        />
+      }
       <div className="container px-5 py-5 mx-auto flex flex-col">
         <div className="lg:w-4/6 mx-auto">
           <div className="overflow-hidden">
