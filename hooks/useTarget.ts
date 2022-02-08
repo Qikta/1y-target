@@ -88,9 +88,9 @@ export default function useTarget() {
       try {
         setLoading(true);
 
-        const baseUrl = 'http://localhost:3000/'
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-      await axios.post(`${baseUrl}api/ogp`, {
+        await axios.post(`${baseUrl}api/ogp`, {
           title: request.targetDetail.name,
           user_name: request.user_name
         }).then((res) => {
