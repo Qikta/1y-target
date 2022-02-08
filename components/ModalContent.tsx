@@ -11,7 +11,7 @@ export default function ModalContent (props: any) {
       <div>
           <div className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-            { !session ? <Auth onClick={props.onClick} /> : <TargetForm onClick={props.onClick} />}
+            { !session ? <Auth onClick={props.onClick} /> : <TargetForm onClick={props.onClick} mode='CREATE' />}
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black" /> :

@@ -1,14 +1,29 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import useTarget, { ITargetForm } from "../hooks/useTarget"
+import useUser from '../hooks/useUser'
 import { supabase } from "../utils/supabaseClient"
 
 export default function TargetForm (props: any) {
-    const { createTarget } = useTarget()
+    const { createTarget, editTarget } = useTarget()
+    const { profile } = useUser()
     const { register, handleSubmit } = useForm<ITargetForm>()
 
     const onSubmit: SubmitHandler<ITargetForm> = (data) => {
-        data.user_id = supabase.auth.user()?.id
-        createTarget(data)
+        switch (props.mode) {
+            case 'CREATE':
+                data.targetDetail.user_id = supabase.auth.user()?.id
+                data.user_name = profile?.username ? profile?.username : ''
+                createTarget(data)
+                return
+            case 'EDIT':
+                data.id = props?.target?.id
+                data.targetDetail.user_id = props?.target?.user_id
+                data.user_name = props?.target?.user_name
+                editTarget(data)
+                return
+            default:
+                return
+        }
     }
 
     return (
@@ -27,8 +42,13 @@ export default function TargetForm (props: any) {
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="title" className="text-lx">Title:</label>
-                            <input type="text" placeholder="title" id="title" className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" 
-                              {...register('name', { required: true })}
+                            <input 
+                              type="text" 
+                              placeholder="title" 
+                              id="title" 
+                              defaultValue={props?.target?.targetDetail.name}
+                              className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" 
+                              {...register('targetDetail.name', { required: true })}
                             />
                         </div>
                         <div>
@@ -38,8 +58,9 @@ export default function TargetForm (props: any) {
                             cols={30}
                             rows={10}
                             placeholder="whrite here.."
+                            defaultValue={props?.target?.targetDetail.description}
                             className="w-full p-4 bg-gray-100 outline-none rounded-md"
-                            {...register('description')}
+                            {...register('targetDetail.description')}
                             />
                         </div>
                         <div className='relative pt-1'>
@@ -60,8 +81,18 @@ export default function TargetForm (props: any) {
                             min="0"
                             max="100"
                             step="5"
-                            {...register('value')}
+                            defaultValue={props?.target?.targetDetail.value}
+                            {...register('targetDetail.value')}
                             />
+                        </div>
+                        <div>
+                            <input 
+                              type="checkbox"
+                              className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" 
+                              defaultValue={props?.target?.targetDetail.is_complete}
+                              {...register('targetDetail.is_complete')}  
+                            />
+                            <label htmlFor="">is Successd?</label>
                         </div>
                     </div>
                     <button type='submit' className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">
