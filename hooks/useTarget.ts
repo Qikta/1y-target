@@ -3,6 +3,8 @@ import Target from "../components/Target";
 import { definitions } from "../types/entities/supabase"
 import { supabase } from "../utils/supabaseClient"
 import axios from 'axios'
+import { useRouter } from "next/router";
+import useUser from "./useUser";
 
 export interface ITarget  {
   id: string
@@ -18,17 +20,25 @@ export interface ITarget  {
 }
 
 export interface ITargetForm {
+  id?: number
+  user_name: string
+  targetDetail: ITargetFormDetail
+}
+
+export interface ITargetFormDetail {
   name: string
   description?: string
   value: number
   user_id?: string
-  ogp_url?: string 
+  ogp_url?: string
+  is_complete?: boolean
 }
 
 export default function useTarget() {
   const[targetList, setTargetList] = useState<ITarget[]>([])
   const [loading, setLoading] = useState(false);
   const [targetForm, setTargetForm] = useState<ITargetForm>()
+  const router = useRouter()
 
   useEffect(() => {
     const setupTargetList = async () => {
@@ -69,23 +79,25 @@ export default function useTarget() {
       }
     }
     setupTargetList()
-  }, [])
+  }, [router.pathname])
+
 
   const createTarget = async (request: ITargetForm) => {
     const user = supabase.auth.user()
-
     if (user !== null) {
       try {
         setLoading(true);
 
-      await axios.post('api/ogp', {
-          title: request.name,
-          user_name: 'test'
+        const baseUrl = 'http://localhost:3000/'
+
+      await axios.post(`${baseUrl}api/ogp`, {
+          title: request.targetDetail.name,
+          user_name: request.user_name
         }).then((res) => {
-          request.ogp_url = res.data.ogp_url
+          request.targetDetail.ogp_url = res.data.ogp_url
         }).catch((err) => alert(err))
         
-        const { error } = await supabase.from('targets').insert([request])
+        const { error } = await supabase.from('targets').insert([request.targetDetail])
 
         if (error) { throw error}
 
@@ -99,9 +111,30 @@ export default function useTarget() {
       alert('loginしてください')
     }
   }
+
+  const editTarget = async (request: ITargetForm) => {
+    const user = supabase.auth.user()
+    if (user !== null) {
+      try {
+        setLoading(true);
+        const { error } = await supabase.from('targets').update([request.targetDetail]).match({id: request.id})
+
+        if (error) { throw error}
+
+        location.reload()
+      } catch(err) {
+        alert(err)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      alert('loginしてください')
+    }
+  } 
   return {
       targetList,
       loading,
-      createTarget
+      createTarget,
+      editTarget
   }
 }

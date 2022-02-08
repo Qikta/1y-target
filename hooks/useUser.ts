@@ -32,38 +32,38 @@ export default function useUser() {
   const [profile, setProfile] = useState<IProfile>();
   const router = useRouter()
 
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        // @ts-ignore
-        setSession(session)
-      }
-    );
+  // useEffect(() => {
+  //   const { data: authListener } = supabase.auth.onAuthStateChange(
+  //     (event, session) => {
+  //       // @ts-ignore
+  //       setSession(session)
+  //     }
+  //   );
 
-    return () => {
-      // @ts-ignore
-      authListener.unsubscribe()
-    }
-  }, [])
+  //   return () => {
+  //     // @ts-ignore
+  //     authListener.unsubscribe()
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    const setupUser = async () => {
-      // @ts-ignore
-      if (session?.user.id) {
-        const { data: user, error } = await supabase
-          .from("users")
-          .select("*")
-          // @ts-ignore
-          .eq("id", session.user.id)
-          .single();
-        if (error) {
-          throw error
-        }
-        setUser(user);
-      }
-    };
-    setupUser();
-  }, []);
+  // useEffect(() => {
+  //   const setupUser = async () => {
+  //     // @ts-ignore
+  //     if (session?.user.id) {
+  //       const { data: user, error } = await supabase
+  //         .from("users")
+  //         .select("*")
+  //         // @ts-ignore
+  //         .eq("id", session.user.id)
+  //         .single();
+  //       if (error) {
+  //         throw error
+  //       }
+  //       setUser(user);
+  //     }
+  //   };
+  //   setupUser();
+  // }, []);
 
   useEffect(() => {
     const setUpProfile = async () => {
@@ -105,7 +105,7 @@ export default function useUser() {
       }
     }
     setUpProfile();
-  }, [router.pathname])
+  }, ['/'])
 
   const insertProfile =async (request: IProfile) => {
     const user = supabase.auth.user()
