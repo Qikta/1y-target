@@ -8,6 +8,7 @@ import { HeatMapValue } from "@uiw/react-heat-map";
 import { TwitterShareButton, FacebookShareButton, LineShareButton, HatenaShareButton, TwitterIcon, FacebookIcon, LineIcon, HatenaIcon } from "react-share";
 import Seo from "../../../../components/SeoHeader"
 import Link from "next/link";
+import useUser from "../../../../hooks/useUser";
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
@@ -57,6 +58,7 @@ export const getServerSideProps = async ({ params }) => {
 // @ts-ignore
 const Main = ({ post}) => {
   const seriarisePost = JSON.parse(post)
+  const { profile } = useUser()
   const router = useRouter()
   const optionalCreateTiem = seriarisePost.created_at !== undefined ? new Date(seriarisePost.created_at) : undefined
 
@@ -165,9 +167,23 @@ const Main = ({ post}) => {
             </div>
           </div>
 
-          <div className="flex justify-end">
-            <button onClick={editButton}>Edit</button>
-          </div>
+          { profile?.username === target.user_name &&
+            <div className="flex justify-end">
+              <button onClick={editButton} className="
+                inline-block
+                px-5
+                py-2
+                font-semibold
+                text-white
+                rounded-lg
+                focus:outline-none
+                bg-amber-400
+                hover:bg-amber-600"
+              >
+                Edit
+              </button>
+            </div>
+          }
           
           
           {/* <div className="flex items-end justify-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm sm:py-8  overflow-hidden relative"> */}
