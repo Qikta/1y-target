@@ -22,6 +22,7 @@ export interface ITarget  {
 export interface ITargetForm {
   id?: number
   user_name: string
+  avatar_url?: string
   targetDetail: ITargetFormDetail
 }
 
@@ -78,7 +79,7 @@ export default function useTarget() {
       }
     }
     setupTargetList()
-  }, [router.pathname])
+  }, [])
 
 
   const createTarget = async (request: ITargetForm) => {
@@ -89,9 +90,10 @@ export default function useTarget() {
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-        await axios.post(`${baseUrl}/api/ogp`, {
+        await axios.post('/api/ogp', {
           title: request.targetDetail.title,
-          user_name: request.user_name
+          user_name: request.user_name,
+          avatar_url: request.avatar_url
         }).then((res) => {
           request.targetDetail.ogp_url = res.data.ogp_url
         }).catch((err) => alert(err))

@@ -13,12 +13,14 @@ export default function TargetForm (props: any) {
             case 'CREATE':
                 data.targetDetail.user_id = supabase.auth.user()?.id
                 data.user_name = profile?.user_name ? profile?.user_name : ''
+                data.avatar_url = profile?.avatar_url ? profile?.avatar_url : ''
                 createTarget(data)
                 return
             case 'EDIT':
                 data.id = props?.target?.id
                 data.targetDetail.user_id = props?.target?.user_id
                 data.user_name = props?.target?.user_name
+                data.avatar_url = profile?.avatar_url ? profile?.avatar_url : ''
                 editTarget(data)
                 return
             default:

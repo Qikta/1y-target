@@ -16,11 +16,13 @@ const createOgp = async (
     req: NextApiRequest,
     res: NextApiResponse<ICreateOgpResponse>
   ): Promise<void> => {
-    const { title, user_name } = req.body;
+    const { title, user_name, avatar_url } = req.body;
     const WIDTH = 1200 as const;
     const HEIGHT = 630 as const;
     const DX = 0 as const;
     const DY = 0 as const;
+    const offset = { x: 960, y: 50 }
+    const radius = 40
     const canvas = createCanvas(WIDTH, HEIGHT);
     const ctx = canvas.getContext("2d");
 
@@ -62,6 +64,42 @@ const createOgp = async (
       const y = index * lineHeight + HEIGHT / 1.8 - (lineHeight / 2) * (lines.length - 1)
       ctx.fillText(line.text, x, y)
     })
+
+    ctx.restore()
+
+    ctx.save()
+
+    // ユーザーネームの描画
+    ctx.font = 'bold 30px'
+    ctx.textAlign = 'left'
+    ctx.fillText(
+      user_name,
+      WIDTH - offset.x - radius * 2,
+      HEIGHT - offset.y - radius
+    )
+
+    ctx.restore()
+
+    ctx.save()
+    // プロフィール画像の描画
+    ctx.arc( // 円形
+      WIDTH - offset.x - radius - radius * 2.2,
+      HEIGHT - offset.y - radius,
+      radius,
+      0,
+      2 * Math.PI,
+      false
+    )
+    ctx.clip() // 円形にクリップ
+
+    const image = await loadImage(avatar_url)
+    ctx.drawImage(
+      image,
+      WIDTH - offset.x - radius * 2 - radius * 2.2,
+      HEIGHT - offset.y - radius * 2,
+      radius * 2,
+      radius * 2
+    )
 
     ctx.restore()
 
