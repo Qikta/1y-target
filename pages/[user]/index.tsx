@@ -48,9 +48,9 @@ type PageProps = {
 export const getServerSideProps = async ({ params }) => { 
   // ${path.id}とすることで引数pathのidごとのデータを取得する 
   const {data, error} = await supabase
-    .from<definitions['target_view']>('target_view')
+    .from<definitions['user_target_view']>('user_target_view')
     .select('*')
-    .eq('username', String(params.username))
+    .eq('user_name', String(params.user_name))
   
   if (error) { throw error }
   const post = JSON.stringify(data)
@@ -76,12 +76,11 @@ const Main = ({post}) => {
 
       targetList.push({
         id: String(target.id),
-        name: target?.name || '',
-        user_name: target.username || '',
+        title: target?.title || '',
+        user_name: target.user_name || '',
         description: target.description || '',
         value: target.value || 0,
         is_complete: target.is_complete || false,
-        favorite_count: target.favorite_count || 0,
         avater_url: target.avatar_url || '',
         created_date: optionalCreateTiem?.toLocaleDateString() || '',
         ogp_url: target.ogp_url
@@ -102,7 +101,7 @@ const Main = ({post}) => {
           <p className="text-base">user description</p>
           <p>{targetList.length}Target</p>
         </div>
-        { profile?.username == userInfo.user_name && 
+        { profile?.user_name == userInfo.user_name && 
         <div className="flex flex-col items-center text-center justify-end ">
           <button onClick={() => router.push('/settings/profile')}>edit</button>
         </div>

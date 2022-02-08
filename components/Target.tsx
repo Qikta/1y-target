@@ -14,8 +14,8 @@ export default function Target () {
 
   return (
     <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
-      <Link href={{ pathname: '/[username]/targets/[target_id]',
-            query: { username: targetContext.user_name, target_id: targetContext.id }}} passHref>
+      <Link href={{ pathname: '/[user]/targets/[target_id]',
+            query: { user: targetContext.user_name, target_id: targetContext.id }}} passHref>
         <article className='overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-amber-400'>
           { targetContext.ogp_url &&
             <img className="block h-auto w-full" src={targetContext.ogp_url} alt="ogpImage" />
@@ -23,7 +23,7 @@ export default function Target () {
           <header className="flex items-center justify-between leading-tight p-2 md:p-4">
               <h1 className="text-lg">
                   <a className="no-underline hover:underline text-black" href="#">
-                  { targetContext.name }
+                  { targetContext.title }
                   </a>
               </h1>
           </header>
@@ -36,7 +36,7 @@ export default function Target () {
 
           <footer className="flex items-center justify-between leading-none p-2 md:p-4">
             <div className="flex items-center no-underline hover:underline text-black">
-              <Link href={{pathname: '/[username]', query: { username: targetContext.user_name }}} passHref>
+              <Link href={{pathname: '/[user]', query: { user: targetContext.user_name }}} passHref>
                 { targetContext.avater_url ?
                   <img className="w-10 h-10 rounded-full mr-4" src={targetContext.avater_url} alt="Avatar of Jonathan Reinink" />
                   :
@@ -59,7 +59,7 @@ export default function Target () {
                 }
               </Link>
               <div className="text-sm">
-                <Link href={{pathname: '/[username]', query: { username: targetContext.user_name }}} passHref>
+                <Link href={{pathname: '/[user]', query: { user: targetContext.user_name }}} passHref>
                   <p className="text-gray-900 leading-none">{ targetContext.user_name }</p>
                 </Link>
                 <p className="text-gray-600">{ targetContext.created_date }</p>

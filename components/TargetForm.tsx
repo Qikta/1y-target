@@ -12,7 +12,7 @@ export default function TargetForm (props: any) {
         switch (props.mode) {
             case 'CREATE':
                 data.targetDetail.user_id = supabase.auth.user()?.id
-                data.user_name = profile?.username ? profile?.username : ''
+                data.user_name = profile?.user_name ? profile?.user_name : ''
                 createTarget(data)
                 return
             case 'EDIT':
@@ -46,9 +46,9 @@ export default function TargetForm (props: any) {
                               type="text" 
                               placeholder="title" 
                               id="title" 
-                              defaultValue={props?.target?.targetDetail.name}
+                              defaultValue={props?.target?.targetDetail.title}
                               className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md" 
-                              {...register('targetDetail.name', { required: true })}
+                              {...register('targetDetail.title', { required: true })}
                             />
                         </div>
                         <div>

@@ -7,7 +7,7 @@ import { removeBucketPath } from '../utils/supabaseStorage';
 
 export interface IProfile {
   id: string
-  username?: string
+  user_name?: string
   avatar_url?: string
   self_description?: string
   twitter_url?: string
@@ -17,7 +17,7 @@ export interface IProfile {
 
 export interface IProfileForm {
   id: string
-  username: string
+  user_name: string
   avatar?: File
   self_description?: string
   twitter_url?: string
@@ -72,7 +72,7 @@ export default function useUser() {
         try {
           setLoading(true);
           let { data, error} = await supabase
-            .from<definitions['userinfo_view']>('userinfo_view')
+            .from<definitions['user_profile_view']>('user_profile_view')
             .select('*')
             .match({id: user?.id})
             .single()
@@ -81,13 +81,13 @@ export default function useUser() {
             throw error
           }
 
-          if (!data?.username) {
+          if (!data?.user_name) {
             router.push('/onboarding')
           } else {
             if (data) {
               const profile: IProfile = {
                 id: user?.id || '',
-                username: data.username,
+                user_name: data.user_name,
                 avatar_url: data.avatar_url,
                 self_description: '',
                 twitter_url: data.twitter_url,

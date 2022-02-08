@@ -55,7 +55,7 @@ export default function Header(props: any) {
         </a> */}
         <button className="rounded-full bg-gray-200">
           { profile ?
-          <Link href={{pathname: '/[username]', query: { username: profile.username }}} passHref>
+          <Link href={{pathname: '/[user]', query: { user: profile.user_name }}} passHref>
             <img className="w-10 h-10 rounded-full m-1" src={profile.avatar_url} alt="Avatar of Jonathan Reinink" />  
           </Link>
         :

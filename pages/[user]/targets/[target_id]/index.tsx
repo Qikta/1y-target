@@ -38,9 +38,9 @@ const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.de
 export const getServerSideProps = async ({ params }) => { 
   // ${path.id}とすることで引数pathのidごとのデータを取得する 
   const {data, error} = await supabase
-    .from<definitions['target_view']>('target_view')
+    .from<definitions['user_target_view']>('user_target_view')
     .select('*')
-    .eq('id', Number(params.target_id))
+    .eq('id', params.target_id)
     .single()
   
   if (error) { throw error }
@@ -64,8 +64,8 @@ const Main = ({ post}) => {
 
   const target: ITarget = {
     id: String(seriarisePost.id),
-    name: seriarisePost?.name || '',
-    user_name: seriarisePost.username || '',
+    title: seriarisePost?.title || '',
+    user_name: seriarisePost.user_name || '',
     description: seriarisePost.description || '',
     value: seriarisePost.value || 0,
     is_complete: seriarisePost.is_complete || false,
@@ -94,7 +94,7 @@ const Main = ({ post}) => {
   return (
     <>
       <Seo 
-        pageTitle={ target.name }
+        pageTitle={ target.title }
         pageDescription={ target.description }
         pagePath={`${baseUrl}${router.asPath}`}
         pageImg={ target.ogp_url}
@@ -111,7 +111,7 @@ const Main = ({ post}) => {
           
           <div className="flex flex-col sm:flex-row mt-10">
             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
-              <Link href={{pathname: '/[username]', query: { username: target.user_name }}} passHref>
+              <Link href={{pathname: '/[user]', query: { user: target.user_name }}} passHref>
                 { target.avater_url
                   ? <img alt="content" className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400" src={target.avater_url} />
                   : 
@@ -134,7 +134,7 @@ const Main = ({ post}) => {
                 }
               </Link>
               <div className="flex flex-col items-center text-center justify-center">
-                <Link href={{pathname: '/[username]', query: { username: target.user_name }}} passHref>
+                <Link href={{pathname: '/[user]', query: { user: target.user_name }}} passHref>
                   <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{ target.user_name }</h2>
                 </Link>
                 <div className="w-12 h-1 bg-amber-400 rounded mt-2 mb-4"></div>
@@ -142,7 +142,7 @@ const Main = ({ post}) => {
               </div>
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-              <h2 className="leading-relaxed text-lg mb-4">{ target.name }</h2>
+              <h2 className="leading-relaxed text-lg mb-4">{ target.title }</h2>
               <p className="leading-relaxed text-lg mb-4">
                 { target.description }
               </p>
@@ -167,7 +167,7 @@ const Main = ({ post}) => {
             </div>
           </div>
 
-          { profile?.username === target.user_name &&
+          { profile?.user_name === target.user_name &&
             <div className="flex justify-end">
               <button onClick={editButton} className="
                 inline-block
@@ -205,7 +205,7 @@ const Main = ({ post}) => {
           </div> */}
 
           <div className="flex justify-center mx-auto">
-            <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.name }>
+            <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.title }>
               <TwitterIcon size={30} round={true} />
             </TwitterShareButton>
           </div>

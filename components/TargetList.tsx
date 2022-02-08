@@ -5,12 +5,11 @@ import Target from "./Target";
 
 export const Context = createContext<ITarget>({
   id: '',
-  name: '',
+  title: '',
   user_name: '',
   description: '',
   value: 0,
   is_complete: false,
-  favorite_count: 0,
   avater_url: '',
   created_date: '',
   ogp_url: ''

@@ -8,12 +8,12 @@ import useUser from "./useUser";
 
 export interface ITarget  {
   id: string
-  name: string
+  title: string
   user_name: string
   description: string
   value: number
   is_complete: boolean
-  favorite_count: number
+  favorite_count?: number
   avater_url: string
   created_date: string
   ogp_url?: string
@@ -26,7 +26,7 @@ export interface ITargetForm {
 }
 
 export interface ITargetFormDetail {
-  name: string
+  title: string
   description?: string
   value: number
   user_id?: string
@@ -46,7 +46,7 @@ export default function useTarget() {
         setLoading(true);
         setTargetList([])
         const { data, error } = await supabase
-          .from<definitions['target_view']>('target_view')
+          .from<definitions['user_target_view']>('user_target_view')
           .select('*')
         
         if (error) {
@@ -59,12 +59,11 @@ export default function useTarget() {
 
             targetList.push({
                 id: String(target.id),
-                name: target.name || '',
-                user_name: target.username || '',
+                title: target.title || '',
+                user_name: target.user_name || '',
                 description: target.description || '',
                 value: target.value || 0,
                 is_complete: target.is_complete || false,
-                favorite_count: target.favorite_count || 0,
                 avater_url: target.avatar_url || '',
                 created_date: optionalCreateTiem?.toLocaleDateString() || '',
                 ogp_url: target.ogp_url

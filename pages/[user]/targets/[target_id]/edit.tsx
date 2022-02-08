@@ -10,9 +10,9 @@ import { supabase } from "../../../../utils/supabaseClient"
 export const getServerSideProps = async ({ params }) => { 
     // ${path.id}とすることで引数pathのidごとのデータを取得する 
     const {data, error} = await supabase
-      .from<definitions['target_view']>('target_view')
+      .from<definitions['user_target_view']>('user_target_view')
       .select('*')
-      .eq('id', Number(params.target_id))
+      .eq('id', params.target_id)
       .single()
     
     if (error) { throw error }
@@ -34,9 +34,9 @@ const Edit = ({post}) => {
   const {profile} = useUser()
   const target: ITargetForm = {
     id: seriarisePost.id,
-    user_name: profile?.username ? profile.username : '',
+    user_name: profile?.user_name ? profile.user_name : '',
     targetDetail: {
-      name: seriarisePost?.name || '',
+      title: seriarisePost?.title || '',
       description: seriarisePost.description,
       value: seriarisePost.value || 0,
       user_id: profile?.id,
