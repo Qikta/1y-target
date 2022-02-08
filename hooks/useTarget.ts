@@ -90,7 +90,7 @@ export default function useTarget() {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
         await axios.post(`${baseUrl}api/ogp`, {
-          title: request.targetDetail.name,
+          title: request.targetDetail.title,
           user_name: request.user_name
         }).then((res) => {
           request.targetDetail.ogp_url = res.data.ogp_url
