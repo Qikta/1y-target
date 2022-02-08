@@ -31,7 +31,7 @@ export interface ITargetFormDetail {
   value: number
   user_id?: string
   ogp_url?: string
-  is_complete?: boolean
+  is_complete: boolean
 }
 
 export default function useTarget() {
@@ -89,7 +89,7 @@ export default function useTarget() {
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-        await axios.post(`${baseUrl}api/ogp`, {
+        await axios.post(`${baseUrl}/api/ogp`, {
           title: request.targetDetail.title,
           user_name: request.user_name
         }).then((res) => {
