@@ -1,6 +1,6 @@
 import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ITarget } from "../../../../hooks/useTarget";
+import useTarget, { ITarget } from "../../../../hooks/useTarget";
 import { definitions } from "../../../../types/entities/supabase";
 import { supabase } from "../../../../utils/supabaseClient";
 import dynamic from "next/dynamic";
@@ -84,6 +84,10 @@ const Main = ({ post}) => {
   ];
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? '';
+
+  const editButton = () => {
+    router.push(`/${router.asPath}/edit`)
+  }
   
   return (
     <>
@@ -106,7 +110,26 @@ const Main = ({ post}) => {
           <div className="flex flex-col sm:flex-row mt-10">
             <div className="sm:w-1/3 text-center sm:pr-8 sm:py-8">
               <Link href={{pathname: '/[username]', query: { username: target.user_name }}} passHref>
-                <img alt="content" className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400" src={target.avater_url} />
+                { target.avater_url
+                  ? <img alt="content" className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400" src={target.avater_url} />
+                  : 
+                  <button className="rounded-full bg-gray-200">
+                    <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-10 h-10 text-gray-500 m-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+                  </button>
+                }
               </Link>
               <div className="flex flex-col items-center text-center justify-center">
                 <Link href={{pathname: '/[username]', query: { username: target.user_name }}} passHref>
@@ -141,6 +164,11 @@ const Main = ({ post}) => {
               <div style={{ width: `${target.value}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-amber-500"></div>
             </div>
           </div>
+
+          <div className="flex justify-end">
+            <button onClick={editButton}>Edit</button>
+          </div>
+          
           
           {/* <div className="flex items-end justify-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm sm:py-8  overflow-hidden relative"> */}
             {/* @ts-ignore */}
