@@ -12,13 +12,112 @@ export interface paths {
       };
     };
   };
+  "/likes": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.likes.id"];
+          created_at?: parameters["rowFilter.likes.created_at"];
+          updated_at?: parameters["rowFilter.likes.updated_at"];
+          user_id?: parameters["rowFilter.likes.user_id"];
+          target_id?: parameters["rowFilter.likes.target_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["likes"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** likes */
+          likes?: definitions["likes"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.likes.id"];
+          created_at?: parameters["rowFilter.likes.created_at"];
+          updated_at?: parameters["rowFilter.likes.updated_at"];
+          user_id?: parameters["rowFilter.likes.user_id"];
+          target_id?: parameters["rowFilter.likes.target_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.likes.id"];
+          created_at?: parameters["rowFilter.likes.created_at"];
+          updated_at?: parameters["rowFilter.likes.updated_at"];
+          user_id?: parameters["rowFilter.likes.user_id"];
+          target_id?: parameters["rowFilter.likes.target_id"];
+        };
+        body: {
+          /** likes */
+          likes?: definitions["likes"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/profiles": {
     get: {
       parameters: {
         query: {
           id?: parameters["rowFilter.profiles.id"];
           updated_at?: parameters["rowFilter.profiles.updated_at"];
-          username?: parameters["rowFilter.profiles.username"];
+          user_name?: parameters["rowFilter.profiles.user_name"];
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
           twitter_url?: parameters["rowFilter.profiles.twitter_url"];
@@ -78,7 +177,7 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.profiles.id"];
           updated_at?: parameters["rowFilter.profiles.updated_at"];
-          username?: parameters["rowFilter.profiles.username"];
+          user_name?: parameters["rowFilter.profiles.user_name"];
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
           twitter_url?: parameters["rowFilter.profiles.twitter_url"];
@@ -102,7 +201,7 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.profiles.id"];
           updated_at?: parameters["rowFilter.profiles.updated_at"];
-          username?: parameters["rowFilter.profiles.username"];
+          user_name?: parameters["rowFilter.profiles.user_name"];
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
           twitter_url?: parameters["rowFilter.profiles.twitter_url"];
@@ -126,20 +225,14 @@ export interface paths {
       };
     };
   };
-  "/target_view": {
+  "/tags": {
     get: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.target_view.id"];
-          name?: parameters["rowFilter.target_view.name"];
-          description?: parameters["rowFilter.target_view.description"];
-          value?: parameters["rowFilter.target_view.value"];
-          is_complete?: parameters["rowFilter.target_view.is_complete"];
-          created_at?: parameters["rowFilter.target_view.created_at"];
-          favorite_count?: parameters["rowFilter.target_view.favorite_count"];
-          ogp_url?: parameters["rowFilter.target_view.ogp_url"];
-          username?: parameters["rowFilter.target_view.username"];
-          avatar_url?: parameters["rowFilter.target_view.avatar_url"];
+          id?: parameters["rowFilter.tags.id"];
+          created_at?: parameters["rowFilter.tags.created_at"];
+          updated_at?: parameters["rowFilter.tags.updated_at"];
+          name?: parameters["rowFilter.tags.name"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -161,10 +254,169 @@ export interface paths {
       responses: {
         /** OK */
         200: {
-          schema: definitions["target_view"][];
+          schema: definitions["tags"][];
         };
         /** Partial Content */
         206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** tags */
+          tags?: definitions["tags"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.tags.id"];
+          created_at?: parameters["rowFilter.tags.created_at"];
+          updated_at?: parameters["rowFilter.tags.updated_at"];
+          name?: parameters["rowFilter.tags.name"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.tags.id"];
+          created_at?: parameters["rowFilter.tags.created_at"];
+          updated_at?: parameters["rowFilter.tags.updated_at"];
+          name?: parameters["rowFilter.tags.name"];
+        };
+        body: {
+          /** tags */
+          tags?: definitions["tags"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/target_tag": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.target_tag.id"];
+          created_at?: parameters["rowFilter.target_tag.created_at"];
+          updated_at?: parameters["rowFilter.target_tag.updated_at"];
+          target_id?: parameters["rowFilter.target_tag.target_id"];
+          tag_id?: parameters["rowFilter.target_tag.tag_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["target_tag"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** target_tag */
+          target_tag?: definitions["target_tag"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.target_tag.id"];
+          created_at?: parameters["rowFilter.target_tag.created_at"];
+          updated_at?: parameters["rowFilter.target_tag.updated_at"];
+          target_id?: parameters["rowFilter.target_tag.target_id"];
+          tag_id?: parameters["rowFilter.target_tag.tag_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.target_tag.id"];
+          created_at?: parameters["rowFilter.target_tag.created_at"];
+          updated_at?: parameters["rowFilter.target_tag.updated_at"];
+          target_id?: parameters["rowFilter.target_tag.target_id"];
+          tag_id?: parameters["rowFilter.target_tag.tag_id"];
+        };
+        body: {
+          /** target_tag */
+          target_tag?: definitions["target_tag"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
       };
     };
   };
@@ -174,14 +426,11 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.targets.id"];
           user_id?: parameters["rowFilter.targets.user_id"];
-          name?: parameters["rowFilter.targets.name"];
+          title?: parameters["rowFilter.targets.title"];
           description?: parameters["rowFilter.targets.description"];
           value?: parameters["rowFilter.targets.value"];
           is_complete?: parameters["rowFilter.targets.is_complete"];
-          deadline?: parameters["rowFilter.targets.deadline"];
           created_at?: parameters["rowFilter.targets.created_at"];
-          emoji?: parameters["rowFilter.targets.emoji"];
-          favorite_count?: parameters["rowFilter.targets.favorite_count"];
           ogp_url?: parameters["rowFilter.targets.ogp_url"];
           /** Filtering Columns */
           select?: parameters["select"];
@@ -235,14 +484,11 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.targets.id"];
           user_id?: parameters["rowFilter.targets.user_id"];
-          name?: parameters["rowFilter.targets.name"];
+          title?: parameters["rowFilter.targets.title"];
           description?: parameters["rowFilter.targets.description"];
           value?: parameters["rowFilter.targets.value"];
           is_complete?: parameters["rowFilter.targets.is_complete"];
-          deadline?: parameters["rowFilter.targets.deadline"];
           created_at?: parameters["rowFilter.targets.created_at"];
-          emoji?: parameters["rowFilter.targets.emoji"];
-          favorite_count?: parameters["rowFilter.targets.favorite_count"];
           ogp_url?: parameters["rowFilter.targets.ogp_url"];
         };
         header: {
@@ -260,14 +506,11 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.targets.id"];
           user_id?: parameters["rowFilter.targets.user_id"];
-          name?: parameters["rowFilter.targets.name"];
+          title?: parameters["rowFilter.targets.title"];
           description?: parameters["rowFilter.targets.description"];
           value?: parameters["rowFilter.targets.value"];
           is_complete?: parameters["rowFilter.targets.is_complete"];
-          deadline?: parameters["rowFilter.targets.deadline"];
           created_at?: parameters["rowFilter.targets.created_at"];
-          emoji?: parameters["rowFilter.targets.emoji"];
-          favorite_count?: parameters["rowFilter.targets.favorite_count"];
           ogp_url?: parameters["rowFilter.targets.ogp_url"];
         };
         body: {
@@ -285,20 +528,17 @@ export interface paths {
       };
     };
   };
-  "/targets_info_view": {
+  "/user_profile_view": {
     get: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.targets_info_view.id"];
-          name?: parameters["rowFilter.targets_info_view.name"];
-          description?: parameters["rowFilter.targets_info_view.description"];
-          value?: parameters["rowFilter.targets_info_view.value"];
-          is_complete?: parameters["rowFilter.targets_info_view.is_complete"];
-          deadline?: parameters["rowFilter.targets_info_view.deadline"];
-          created_at?: parameters["rowFilter.targets_info_view.created_at"];
-          favorite_count?: parameters["rowFilter.targets_info_view.favorite_count"];
-          username?: parameters["rowFilter.targets_info_view.username"];
-          avatar_url?: parameters["rowFilter.targets_info_view.avatar_url"];
+          id?: parameters["rowFilter.user_profile_view.id"];
+          user_name?: parameters["rowFilter.user_profile_view.user_name"];
+          avatar_url?: parameters["rowFilter.user_profile_view.avatar_url"];
+          self_description?: parameters["rowFilter.user_profile_view.self_description"];
+          twitter_url?: parameters["rowFilter.user_profile_view.twitter_url"];
+          instagram_url?: parameters["rowFilter.user_profile_view.instagram_url"];
+          website?: parameters["rowFilter.user_profile_view.website"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -320,24 +560,26 @@ export interface paths {
       responses: {
         /** OK */
         200: {
-          schema: definitions["targets_info_view"][];
+          schema: definitions["user_profile_view"][];
         };
         /** Partial Content */
         206: unknown;
       };
     };
   };
-  "/userinfo_view": {
+  "/user_target_view": {
     get: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.userinfo_view.id"];
-          username?: parameters["rowFilter.userinfo_view.username"];
-          avatar_url?: parameters["rowFilter.userinfo_view.avatar_url"];
-          self_description?: parameters["rowFilter.userinfo_view.self_description"];
-          twitter_url?: parameters["rowFilter.userinfo_view.twitter_url"];
-          instagram_url?: parameters["rowFilter.userinfo_view.instagram_url"];
-          website?: parameters["rowFilter.userinfo_view.website"];
+          id?: parameters["rowFilter.user_target_view.id"];
+          title?: parameters["rowFilter.user_target_view.title"];
+          description?: parameters["rowFilter.user_target_view.description"];
+          value?: parameters["rowFilter.user_target_view.value"];
+          is_complete?: parameters["rowFilter.user_target_view.is_complete"];
+          created_at?: parameters["rowFilter.user_target_view.created_at"];
+          ogp_url?: parameters["rowFilter.user_target_view.ogp_url"];
+          user_name?: parameters["rowFilter.user_target_view.user_name"];
+          avatar_url?: parameters["rowFilter.user_target_view.avatar_url"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -359,7 +601,7 @@ export interface paths {
       responses: {
         /** OK */
         200: {
-          schema: definitions["userinfo_view"][];
+          schema: definitions["user_target_view"][];
         };
         /** Partial Content */
         206: unknown;
@@ -369,18 +611,40 @@ export interface paths {
 }
 
 export interface definitions {
+  likes: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default (now() AT TIME ZONE 'utc'::text)
+     */
+    created_at: string;
+    /**
+     * Format: timestamp with time zone
+     * @default (now() AT TIME ZONE 'utc'::text)
+     */
+    updated_at: string;
+    /** Format: uuid */
+    user_id: string;
+    /** Format: bigint */
+    target_id: number;
+  };
   profiles: {
     /**
      * Format: uuid
      * @description Note:
      * This is a Primary Key.<pk/>
-     * This is a Foreign Key to `userinfo_view.id`.<fk table='userinfo_view' column='id'/>
+     * This is a Foreign Key to `user_profile_view.id`.<fk table='user_profile_view' column='id'/>
      */
     id: string;
     /** Format: timestamp with time zone */
     updated_at?: string;
     /** Format: text */
-    username: string;
+    user_name: string;
     /** Format: text */
     avatar_url?: string;
     /** Format: text */
@@ -396,31 +660,47 @@ export interface definitions {
     /** Format: text */
     self_description?: string;
   };
-  target_view: {
+  tags: {
     /**
      * Format: bigint
      * @description Note:
      * This is a Primary Key.<pk/>
      */
-    id?: number;
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default timezone('utc'::text, now())
+     */
+    created_at: string;
+    /**
+     * Format: timestamp with time zone
+     * @default timezone('utc'::text, now())
+     */
+    updated_at: string;
     /** Format: text */
     name?: string;
-    /** Format: text */
-    description?: string;
-    /** Format: integer */
-    value?: number;
-    /** Format: boolean */
-    is_complete?: boolean;
-    /** Format: timestamp with time zone */
-    created_at?: string;
-    /** Format: integer */
-    favorite_count?: number;
-    /** Format: text */
-    ogp_url?: string;
-    /** Format: text */
-    username?: string;
-    /** Format: text */
-    avatar_url?: string;
+  };
+  target_tag: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default (now() AT TIME ZONE 'utc'::text)
+     */
+    created_at: string;
+    /**
+     * Format: timestamp with time zone
+     * @default (now() AT TIME ZONE 'utc'::text)
+     */
+    updated_at: string;
+    /** Format: bigint */
+    target_id?: number;
+    /** Format: bigint */
+    tag_id?: number;
   };
   targets: {
     /**
@@ -432,58 +712,26 @@ export interface definitions {
     /**
      * Format: uuid
      * @description Note:
-     * This is a Foreign Key to `userinfo_view.id`.<fk table='userinfo_view' column='id'/>
+     * This is a Foreign Key to `user_profile_view.id`.<fk table='user_profile_view' column='id'/>
      */
     user_id: string;
     /** Format: text */
-    name: string;
+    title: string;
     /** Format: text */
     description?: string;
     /** Format: integer */
     value: number;
     /** Format: boolean */
     is_complete: boolean;
-    /** Format: date */
-    deadline?: string;
     /**
      * Format: timestamp with time zone
      * @default (now() AT TIME ZONE 'utc'::text)
      */
     created_at: string;
-    /** Format: character varying */
-    emoji?: string;
-    /** Format: integer */
-    favorite_count: number;
     /** Format: text */
     ogp_url?: string;
   };
-  targets_info_view: {
-    /**
-     * Format: bigint
-     * @description Note:
-     * This is a Primary Key.<pk/>
-     */
-    id?: number;
-    /** Format: text */
-    name?: string;
-    /** Format: text */
-    description?: string;
-    /** Format: integer */
-    value?: number;
-    /** Format: boolean */
-    is_complete?: boolean;
-    /** Format: date */
-    deadline?: string;
-    /** Format: timestamp with time zone */
-    created_at?: string;
-    /** Format: integer */
-    favorite_count?: number;
-    /** Format: text */
-    username?: string;
-    /** Format: text */
-    avatar_url?: string;
-  };
-  userinfo_view: {
+  user_profile_view: {
     /**
      * Format: uuid
      * @description Note:
@@ -491,7 +739,7 @@ export interface definitions {
      */
     id?: string;
     /** Format: text */
-    username?: string;
+    user_name?: string;
     /** Format: text */
     avatar_url?: string;
     /** Format: text */
@@ -502,6 +750,30 @@ export interface definitions {
     instagram_url?: string;
     /** Format: text */
     website?: string;
+  };
+  user_target_view: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: number;
+    /** Format: text */
+    title?: string;
+    /** Format: text */
+    description?: string;
+    /** Format: integer */
+    value?: number;
+    /** Format: boolean */
+    is_complete?: boolean;
+    /** Format: timestamp with time zone */
+    created_at?: string;
+    /** Format: text */
+    ogp_url?: string;
+    /** Format: text */
+    user_name?: string;
+    /** Format: text */
+    avatar_url?: string;
   };
 }
 
@@ -538,6 +810,18 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description likes */
+  "body.likes": definitions["likes"];
+  /** Format: bigint */
+  "rowFilter.likes.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.likes.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.likes.updated_at": string;
+  /** Format: uuid */
+  "rowFilter.likes.user_id": string;
+  /** Format: bigint */
+  "rowFilter.likes.target_id": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */
@@ -545,7 +829,7 @@ export interface parameters {
   /** Format: timestamp with time zone */
   "rowFilter.profiles.updated_at": string;
   /** Format: text */
-  "rowFilter.profiles.username": string;
+  "rowFilter.profiles.user_name": string;
   /** Format: text */
   "rowFilter.profiles.avatar_url": string;
   /** Format: text */
@@ -560,28 +844,28 @@ export interface parameters {
   "rowFilter.profiles.age": string;
   /** Format: text */
   "rowFilter.profiles.self_description": string;
-  /** @description target_view */
-  "body.target_view": definitions["target_view"];
+  /** @description tags */
+  "body.tags": definitions["tags"];
   /** Format: bigint */
-  "rowFilter.target_view.id": string;
-  /** Format: text */
-  "rowFilter.target_view.name": string;
-  /** Format: text */
-  "rowFilter.target_view.description": string;
-  /** Format: integer */
-  "rowFilter.target_view.value": string;
-  /** Format: boolean */
-  "rowFilter.target_view.is_complete": string;
+  "rowFilter.tags.id": string;
   /** Format: timestamp with time zone */
-  "rowFilter.target_view.created_at": string;
-  /** Format: integer */
-  "rowFilter.target_view.favorite_count": string;
+  "rowFilter.tags.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.tags.updated_at": string;
   /** Format: text */
-  "rowFilter.target_view.ogp_url": string;
-  /** Format: text */
-  "rowFilter.target_view.username": string;
-  /** Format: text */
-  "rowFilter.target_view.avatar_url": string;
+  "rowFilter.tags.name": string;
+  /** @description target_tag */
+  "body.target_tag": definitions["target_tag"];
+  /** Format: bigint */
+  "rowFilter.target_tag.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.target_tag.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.target_tag.updated_at": string;
+  /** Format: bigint */
+  "rowFilter.target_tag.target_id": string;
+  /** Format: bigint */
+  "rowFilter.target_tag.tag_id": string;
   /** @description targets */
   "body.targets": definitions["targets"];
   /** Format: bigint */
@@ -589,61 +873,53 @@ export interface parameters {
   /** Format: uuid */
   "rowFilter.targets.user_id": string;
   /** Format: text */
-  "rowFilter.targets.name": string;
+  "rowFilter.targets.title": string;
   /** Format: text */
   "rowFilter.targets.description": string;
   /** Format: integer */
   "rowFilter.targets.value": string;
   /** Format: boolean */
   "rowFilter.targets.is_complete": string;
-  /** Format: date */
-  "rowFilter.targets.deadline": string;
   /** Format: timestamp with time zone */
   "rowFilter.targets.created_at": string;
-  /** Format: character varying */
-  "rowFilter.targets.emoji": string;
-  /** Format: integer */
-  "rowFilter.targets.favorite_count": string;
   /** Format: text */
   "rowFilter.targets.ogp_url": string;
-  /** @description targets_info_view */
-  "body.targets_info_view": definitions["targets_info_view"];
-  /** Format: bigint */
-  "rowFilter.targets_info_view.id": string;
-  /** Format: text */
-  "rowFilter.targets_info_view.name": string;
-  /** Format: text */
-  "rowFilter.targets_info_view.description": string;
-  /** Format: integer */
-  "rowFilter.targets_info_view.value": string;
-  /** Format: boolean */
-  "rowFilter.targets_info_view.is_complete": string;
-  /** Format: date */
-  "rowFilter.targets_info_view.deadline": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.targets_info_view.created_at": string;
-  /** Format: integer */
-  "rowFilter.targets_info_view.favorite_count": string;
-  /** Format: text */
-  "rowFilter.targets_info_view.username": string;
-  /** Format: text */
-  "rowFilter.targets_info_view.avatar_url": string;
-  /** @description userinfo_view */
-  "body.userinfo_view": definitions["userinfo_view"];
+  /** @description user_profile_view */
+  "body.user_profile_view": definitions["user_profile_view"];
   /** Format: uuid */
-  "rowFilter.userinfo_view.id": string;
+  "rowFilter.user_profile_view.id": string;
   /** Format: text */
-  "rowFilter.userinfo_view.username": string;
+  "rowFilter.user_profile_view.user_name": string;
   /** Format: text */
-  "rowFilter.userinfo_view.avatar_url": string;
+  "rowFilter.user_profile_view.avatar_url": string;
   /** Format: text */
-  "rowFilter.userinfo_view.self_description": string;
+  "rowFilter.user_profile_view.self_description": string;
   /** Format: text */
-  "rowFilter.userinfo_view.twitter_url": string;
+  "rowFilter.user_profile_view.twitter_url": string;
   /** Format: text */
-  "rowFilter.userinfo_view.instagram_url": string;
+  "rowFilter.user_profile_view.instagram_url": string;
   /** Format: text */
-  "rowFilter.userinfo_view.website": string;
+  "rowFilter.user_profile_view.website": string;
+  /** @description user_target_view */
+  "body.user_target_view": definitions["user_target_view"];
+  /** Format: bigint */
+  "rowFilter.user_target_view.id": string;
+  /** Format: text */
+  "rowFilter.user_target_view.title": string;
+  /** Format: text */
+  "rowFilter.user_target_view.description": string;
+  /** Format: integer */
+  "rowFilter.user_target_view.value": string;
+  /** Format: boolean */
+  "rowFilter.user_target_view.is_complete": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.user_target_view.created_at": string;
+  /** Format: text */
+  "rowFilter.user_target_view.ogp_url": string;
+  /** Format: text */
+  "rowFilter.user_target_view.user_name": string;
+  /** Format: text */
+  "rowFilter.user_target_view.avatar_url": string;
 }
 
 export interface operations {}
