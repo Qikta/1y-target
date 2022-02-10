@@ -32,19 +32,19 @@ export default function useUser() {
   const [profile, setProfile] = useState<IProfile>();
   const router = useRouter()
 
-  // useEffect(() => {
-  //   const { data: authListener } = supabase.auth.onAuthStateChange(
-  //     (event, session) => {
-  //       // @ts-ignore
-  //       setSession(session)
-  //     }
-  //   );
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        // @ts-ignore
+        setSession(session)
+      }
+    );
 
-  //   return () => {
-  //     // @ts-ignore
-  //     authListener.unsubscribe()
-  //   }
-  // }, [])
+    return () => {
+      // @ts-ignore
+      authListener.unsubscribe()
+    }
+  }, [])
 
   // useEffect(() => {
   //   const setupUser = async () => {
@@ -89,7 +89,7 @@ export default function useUser() {
                 id: user?.id || '',
                 user_name: data.user_name,
                 avatar_url: data.avatar_url,
-                self_description: '',
+                self_description: data.self_description,
                 twitter_url: data.twitter_url,
                 instagram_url: data.instagram_url,
                 website: data.website
@@ -104,10 +104,10 @@ export default function useUser() {
         }
       }
     }
-    setUpProfile();
-  }, ['/'])
+    setUpProfile()
+  }, [session, setProfile])
 
-  const insertProfile =async (request: IProfile) => {
+  const insertProfile = async (request: IProfile) => {
     const user = supabase.auth.user()
     try {
       setLoading(true);
@@ -115,8 +115,8 @@ export default function useUser() {
         const { error } = await supabase.from('profiles').upsert([request])
   
         if (error) { throw error}
-  
-        router.push('/')
+        setProfile(request)
+        router.reload()
       } else {
         alert('loginしてください。')
       }

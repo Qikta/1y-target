@@ -18,8 +18,7 @@ const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.de
 
 // @ts-ignore
 const Main = () => {
-  const {targetList} = useContext(GlobalContext)
-  const { profile } = useUser()
+  const {targetList, profile} = useContext(GlobalContext)
   const router = useRouter()
   const {user, target_id} = router.query
   const target = targetList.find(item => item.id === target_id)
