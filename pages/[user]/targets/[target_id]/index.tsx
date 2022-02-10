@@ -1,5 +1,5 @@
 import { Router, useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useTarget, { ITarget } from "../../../../hooks/useTarget";
 import { definitions } from "../../../../types/entities/supabase";
 import { supabase } from "../../../../utils/supabaseClient";
@@ -11,71 +11,20 @@ import Link from "next/link";
 import useUser from "../../../../hooks/useUser";
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import { GlobalContext } from "../../../../context/global-state-provider";
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
 
-// export const getStaticPaths = async () => {
-//   try {
-//     const {data, error} = await supabase.from<definitions['target_view']>('target_view').select('*') 
-//     if (error) {
-//       throw error
-//     }
-
-//     if (data) {
-//       const paths = data.map((post) => ({
-//         params: {
-//           username: String(post.username),
-//           target_id: String(post.id)
-//         },
-//       }))
-//       return { paths, fallback: false }
-//     }
-//   } catch (err) {
-//     alert (err)
-//   } 
-// }
-
 // @ts-ignore
-export const getServerSideProps = async ({ params }) => { 
-  // ${path.id}とすることで引数pathのidごとのデータを取得する 
-  const {data, error} = await supabase
-    .from<definitions['user_target_view']>('user_target_view')
-    .select('*')
-    .eq('id', params.target_id)
-    .single()
-  
-  if (error) { throw error }
-  
-  const post = JSON.stringify(data)
-
-  // props: {}の形で返却する
-  return {
-    props: {
-      post
-    },
-  }
-}
-
-// @ts-ignore
-const Main = ({ post}) => {
-  const seriarisePost = JSON.parse(post)
+const Main = () => {
+  const {targetList} = useContext(GlobalContext)
   const { profile } = useUser()
   const router = useRouter()
-  const optionalCreateTiem = seriarisePost.created_at !== undefined ? new Date(seriarisePost.created_at) : undefined
+  const {user, target_id} = router.query
+  const target = targetList.find(item => item.id === target_id)
+
   const { width, height } = useWindowSize()
-  const target: ITarget = {
-    id: String(seriarisePost.id),
-    title: seriarisePost?.title || '',
-    user_name: seriarisePost.user_name || '',
-    description: seriarisePost.description || '',
-    value: seriarisePost.value || 0,
-    is_complete: seriarisePost.is_complete || false,
-    favorite_count: seriarisePost.favorite_count || 0,
-    avater_url: seriarisePost.avatar_url || '',
-    created_date: optionalCreateTiem?.toLocaleDateString() || '',
-    ogp_url: seriarisePost.ogp_url
-  }
 
   const heatmapValue: Array<HeatMapValue> = [
     { date: '2022/01/11', count:2, content: '' },
@@ -91,6 +40,10 @@ const Main = ({ post}) => {
 
   const editButton = () => {
     router.push(`/${router.asPath}/edit`)
+  }
+
+  if (!target) {
+    return <div className="container my-8 mx-auto px-4 md:px-12">missing data...</div>
   }
   
   return (

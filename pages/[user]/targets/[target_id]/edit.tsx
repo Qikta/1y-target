@@ -1,55 +1,37 @@
 import { useRouter } from "next/router"
+import { useContext } from "react"
 import TargetForm from "../../../../components/TargetForm"
+import { GlobalContext } from "../../../../context/global-state-provider"
 import useTarget, { ITarget, ITargetForm } from "../../../../hooks/useTarget"
 import useUser from "../../../../hooks/useUser"
 import { definitions } from "../../../../types/entities/supabase"
 import { supabase } from "../../../../utils/supabaseClient"
 
-
 // @ts-ignore
-export const getServerSideProps = async ({ params }) => { 
-    // ${path.id}とすることで引数pathのidごとのデータを取得する 
-    const {data, error} = await supabase
-      .from<definitions['user_target_view']>('user_target_view')
-      .select('*')
-      .eq('id', params.target_id)
-      .single()
-    
-    if (error) { throw error }
-    
-    const post = JSON.stringify(data)
-  
-    // props: {}の形で返却する
-    return {
-      props: {
-        post
-      },
-    }
-  }
-
-// @ts-ignore
-const Edit = ({post}) => {
-  const seriarisePost = JSON.parse(post)
+const Edit = () => {
+  const {targetList} = useContext(GlobalContext)
   const router = useRouter()
   const {profile} = useUser()
+  const {user, target_id} = router.query
+  const targetData = targetList.find(item => item.id === target_id)
+
+  if (!targetData) { return <div className="container my-8 mx-auto px-4 md:px-12">missing data...</div> }
   const target: ITargetForm = {
-    id: seriarisePost.id,
+    id: Number(targetData.id),
     user_name: profile?.user_name ? profile.user_name : '',
     targetDetail: {
-      title: seriarisePost?.title || '',
-      description: seriarisePost.description,
-      value: seriarisePost.value || 0,
+      title: targetData?.title || '',
+      description: targetData.description,
+      value: targetData.value || 0,
       user_id: profile?.id,
-      ogp_url: seriarisePost.ogp_url,
-      is_complete: seriarisePost.is_complete || false,
+      ogp_url: targetData.ogp_url,
+      is_complete: targetData.is_complete || false,
     }
   }
-    
     return (
-        <div className="container justify-center">
-            edit page
-            <TargetForm target={target} mode='EDIT' />
-        </div>
+      <div className="container justify-center">
+        <TargetForm target={target} mode='EDIT' />
+      </div>
     )
 }
 

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { GlobalContext } from "../context/global-state-provider";
 import useTarget, { ITarget } from "../hooks/useTarget";
 import { definitions } from "../types/entities/supabase";
 import Target from "./Target";
@@ -18,6 +19,7 @@ export const Context = createContext<ITarget>({
 export default function TargetList() {
   const { targetList, loading } = useTarget()
   const [stateProp, setStateProp] = useState<ITarget>()
+  const glovalContext = useContext(GlobalContext)
 
 if (loading) return (
   <div className="flex justify-center py-16 ">
@@ -52,10 +54,8 @@ return (
       </div>
       <div className="flex flex-wrap -mx-1 lg:-mx-4">
         {
-          targetList.map((target, index) => (
-            <Context.Provider value={target} key={index} >
-              <Target />
-            </Context.Provider>
+          glovalContext.targetList.map((item, index) => (
+            <Target target={item} key={index} />
           ))
         }
       </div>

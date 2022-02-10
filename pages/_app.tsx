@@ -7,16 +7,19 @@ import useModal from '../hooks/useModal'
 import { createContext, useCallback, useState } from 'react'
 import useUser from '../hooks/useUser'
 import '@uiw/react-heat-map/dist.css';
+import GlobalStateProvider from '../context/global-state-provider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toggle, open, close } = useModal()
 
   return (
     <>
-       <Header onClick={open} />
+      <GlobalStateProvider>
+        <Header onClick={open} />
         <Component {...pageProps} onClick={open} />
         { toggle && <ModalContent onClick={close} /> }
         <Footer />
+      </GlobalStateProvider>
     </>
   ) 
 }
