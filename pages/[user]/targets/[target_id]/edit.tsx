@@ -9,9 +9,8 @@ import { supabase } from "../../../../utils/supabaseClient"
 
 // @ts-ignore
 const Edit = () => {
-  const {targetList} = useContext(GlobalContext)
+  const {targetList, profile} = useContext(GlobalContext)
   const router = useRouter()
-  const {profile} = useUser()
   const {user, target_id} = router.query
   const targetData = targetList.find(item => item.id === target_id)
 
