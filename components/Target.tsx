@@ -6,11 +6,11 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Target (props: any) {
-    // const targetContext = useContext(Context)
-    const router = useRouter()
+  // const targetContext = useContext(Context)
+  const router = useRouter()
 
-    const targetStyle = !props.target.is_complete ? 
-      'overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-amber-400' : 'overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-green-400'
+  const targetStyle = !props.target.is_complete ? 
+    'overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-amber-400' : 'overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-green-400'
 
   return (
     <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">

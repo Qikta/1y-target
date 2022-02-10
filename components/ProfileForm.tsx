@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { GlobalContext } from '../context/global-state-provider'
 import useUser, { IProfile, IProfileForm } from "../hooks/useUser"
 import { generateOgpPath } from '../utils/generateOgpPath'
 import { supabase } from '../utils/supabaseClient'
 import { removeBucketPath } from '../utils/supabaseStorage'
 
 export default function ProfileForm () {
-  const { insertProfile, profile } = useUser()
+  const {profile} = useContext(GlobalContext)
+  const { insertProfile } = useUser()
   const { register, handleSubmit } = useForm<IProfile>()
   const [avatarUrl, setAvatarUrl] = useState<string>()
   const [uploading, setUploading] = useState(false)
@@ -85,10 +87,10 @@ export default function ProfileForm () {
       </div>
       <div className="md:flex md:items-center">
         <div className="md:w-1/3">
-            <label htmlFor="description" className="block mb-2 text-lg">Description:</label>
-            </div>
-            <div className="md:w-2/3">
-            <textarea
+          <label htmlFor="description" className="block mb-2 text-lg">Description:</label>
+        </div>
+        <div className="md:w-2/3">
+          <textarea
             id="description"
             cols={30}
             rows={10}
@@ -96,7 +98,7 @@ export default function ProfileForm () {
             className="w-full p-4 bg-gray-100 outline-none rounded-md"
             defaultValue={profile?.self_description}
             {...register('self_description')}
-            />
+          />
         </div>
       </div>
       <div className="md:flex md:items-center mb-6">
@@ -154,7 +156,7 @@ export default function ProfileForm () {
             <button 
               className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type='submit'>
-                Sign Up
+                Create User
             </button>
             </div>
         </div>
