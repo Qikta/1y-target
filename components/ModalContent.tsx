@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { GlobalContext } from "../context/global-state-provider";
 import useModal from "../hooks/useModal";
 import useUser from "../hooks/useUser";
 import { supabase } from "../utils/supabaseClient";
@@ -6,7 +8,7 @@ import TargetForm from "./TargetForm";
 
 
 export default function ModalContent (props: any) {
-  const session = supabase.auth.session()
+  const {session} = useContext(GlobalContext)
   return (
     <div>
       <div className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">

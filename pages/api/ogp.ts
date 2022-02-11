@@ -70,7 +70,7 @@ const createOgp = async (
     ctx.save()
 
     // ユーザーネームの描画
-    ctx.font = 'bold 30px'
+    ctx.font = 'bold 30px sans-serif'
     ctx.textAlign = 'left'
     ctx.fillText(
       user_name,

@@ -6,7 +6,7 @@ import useUser, { IProfile } from "../hooks/useUser";
 export interface GlobalState {
   targetList: Array<ITarget>
   profile?: IProfile
-//   session: Session | null
+  session?: Session
 }
 
 export const GlobalContext = createContext<GlobalState>({
@@ -20,15 +20,15 @@ export const GlobalContext = createContext<GlobalState>({
     instagram_url: '',
     website: ''
   },
-//   session: null
+  session: undefined
 })
 
 const GlobalStateProvider = ({children}: {children: React.ReactNode}) => {
 //   const [state, setState] = useState<GlobalState>()
   const { targetList } = useTarget()
-  const { profile } = useUser()
+  const { profile, session } = useUser()
 
-  const global = {targetList, profile }
+  const global = {targetList, profile, session }
 
   return (
     <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>
