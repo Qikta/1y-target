@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { GlobalContext } from '../context/global-state-provider'
 import useUser, { IProfile, IProfileForm } from "../hooks/useUser"
@@ -6,12 +6,13 @@ import { generateOgpPath } from '../utils/generateOgpPath'
 import { supabase } from '../utils/supabaseClient'
 import { removeBucketPath } from '../utils/supabaseStorage'
 
-export default function ProfileForm () {
+export default function ProfileForm (props: any) {
   const {profile} = useContext(GlobalContext)
   const { insertProfile } = useUser()
   const { register, handleSubmit } = useForm<IProfile>()
   const [avatarUrl, setAvatarUrl] = useState<string>()
   const [uploading, setUploading] = useState(false)
+  const [buttonText, setButtonText] = useState<string>()
 
   const onSubmit: SubmitHandler<IProfile> = (data) => {
     data.id = String(supabase.auth.user()?.id)
@@ -51,17 +52,40 @@ export default function ProfileForm () {
     }
   }
 
+  useEffect(() => {
+    switch (props.mode) {
+      case 'EDIT':
+        setButtonText('Edit Profile')
+        break
+      case 'CREATE':
+        setButtonText('Create Profile')
+        break
+      default:
+        setButtonText('')
+        break
+    }
+  }, [props.mode])
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="md:flex md:items-center mb-6">
         <div className="md:w-1/3">
-            <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="avatar_url">
-                user image
-            </label>
+          <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+            user image
+          </label>
         </div>
-        <div className="md:w-2/3">
+        <div className="md:w-2/3 flex">
+          
+            { avatarUrl ?
+              <img alt="content" className="sm:w-30 sm:h-30 h-20 w-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400 p-1" src={avatarUrl} />
+              :
+              <img alt="content" className="sm:w-30 sm:h-30 h-20 w-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400 p-1" src={profile?.avatar_url} />
+            }
+          <label className='pt-12' htmlFor="avatar_url">
+            <span className='px-4 text-amber-400'>edit profile image</span>
+          </label>
           <input
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+            className="hidden w-full" 
             id="avatar_url" 
             type="file"
             accept="image/*"
@@ -73,11 +97,12 @@ export default function ProfileForm () {
         <div className="md:w-1/3">
             <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="user-name">
                 user Name
+                <span className='text-red-500'>*</span>
             </label>
         </div>
         <div className="md:w-2/3">
           <input
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-amber-500" 
             id="user-name" 
             type="text" 
             defaultValue={profile?.user_name}
@@ -85,9 +110,9 @@ export default function ProfileForm () {
           />
         </div>
       </div>
-      <div className="md:flex md:items-center">
+      <div className="md:flex md:items-center mb-6">
         <div className="md:w-1/3">
-          <label htmlFor="description" className="block mb-2 text-lg">Description:</label>
+          <label htmlFor="description" className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">Description:</label>
         </div>
         <div className="md:w-2/3">
           <textarea
@@ -95,7 +120,7 @@ export default function ProfileForm () {
             cols={30}
             rows={10}
             placeholder="whrite here.."
-            className="w-full p-4 bg-gray-100 outline-none rounded-md"
+            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-amber-500"
             defaultValue={profile?.self_description}
             {...register('self_description')}
           />
@@ -109,7 +134,7 @@ export default function ProfileForm () {
         </div>
         <div className="md:w-2/3">
           <input
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-amber-500" 
             id="twitter" 
             type="text" 
             defaultValue={profile?.twitter_url}
@@ -125,7 +150,7 @@ export default function ProfileForm () {
         </div>
         <div className="md:w-2/3">
           <input
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-amber-500" 
             id="instagram" 
             type="text" 
             defaultValue={profile?.instagram_url}
@@ -141,7 +166,7 @@ export default function ProfileForm () {
         </div>
         <div className="md:w-2/3">
           <input
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+            className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-amber-500" 
             id="website" 
             type="text" 
             defaultValue={profile?.website}
@@ -150,16 +175,16 @@ export default function ProfileForm () {
         </div>
       </div>
         
-        <div className="md:flex md:items-center">
-            <div className="md:w-1/3"></div>
-            <div className="md:w-2/3">
-            <button 
-              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type='submit'>
-                Create User
-            </button>
-            </div>
+      <div className="md:flex md:items-center">
+        <div className="md:w-1/3"></div>
+        <div className="md:w-2/3">
+        <button 
+          className="shadow bg-amber-400 hover:bg-amber-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+          type='submit'>
+            { buttonText }
+        </button>
         </div>
+      </div>
     </form>
   )
 }

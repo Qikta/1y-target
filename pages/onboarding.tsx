@@ -4,7 +4,7 @@ import ProfileForm from "../components/ProfileForm";
 const App: NextPage = () => {
   return (
     <div className="container justify-around mx-auto">
-      <ProfileForm />
+      <ProfileForm mdoe='CREATE' />
     </div>
   )
 }
