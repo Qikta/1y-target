@@ -38,7 +38,7 @@ const Main = () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? '';
 
   const editButton = () => {
-    router.push(`/${router.asPath}/edit`)
+    router.push(`${router.asPath}/edit`)
   }
 
   if (!target) {
