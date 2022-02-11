@@ -15,43 +15,14 @@ export default function Auth (props: any) {
               <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
           </button>
         </div>
-        <p className="text-center text-sm text-gray-400 font-light">
-          Sign in with
-        </p>
+        <div className="flex justify-end p-2">
+          <p className="text-center text-sm text-gray-500 font-light">
+            OYTは一年間の目標共有プラットフォームです。<br />
+            あなたの達成したい目標を決めてシェアしましょう。
+          </p>
+        </div>
         <div>
           <div className="flex items-center justify-center space-x-4 mt-3">
-            <button
-            onClick={() => signInWithGithub() }
-              className="
-                  flex
-                  items-center
-                  py-2
-                  px-4
-                  text-sm
-                  uppercase
-                  rounded
-                  bg-white
-                  hover:bg-gray-100
-                  text-indigo-500
-                  border border-transparent
-                  hover:border-transparent hover:text-gray-700
-                  shadow-md
-                  hover:shadow-lg
-                  font-medium
-                  transition
-                  transform
-                  hover:-translate-y-0.5
-                "
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                className="w-6 h-6 mr-3"
-              >
-                <path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-              </svg>
-              Github
-            </button>
             <button
               onClick={() => signInWithGoogle() }
               className="
@@ -97,117 +68,17 @@ export default function Auth (props: any) {
                   d="M43.611 20.083 43.595 20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"
                 />
               </svg>
-              Google
+              Login with Google
             </button>
           </div>
         </div>
       </div>
       <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
         <p className="text-center text-sm text-gray-500 font-light">
-          Or sign in with credentials
+          <a href="terms" className="underline hover:text-amber-400">利用規約</a>、
+          <a href="privacy" className="underline hover:text-amber-400">プライバシーポリシー</a><br />
+          に同意したうえでログインしてください。
         </p>
-        <form className="mt-6">
-          <div className="relative">
-            <input
-              v-model="loginForm.email"
-              className="
-                appearance-none
-                border
-                pl-12
-                border-gray-100
-                shadow-sm
-                focus:shadow-md focus:placeholder-gray-600
-                transition
-                rounded-md
-                w-full
-                py-3
-                text-gray-600
-                leading-tight
-                focus:outline-none focus:ring-gray-600 focus:shadow-outline
-              "
-              type="email"
-              name="email"
-              placeholder="test@test.com"
-              required
-            />
-            <div className="absolute left-0 inset-y-0 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-7 w-7 ml-3 text-gray-400 p-1"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                />
-                <path
-                  d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="relative mt-3">
-            <input
-              v-model="loginForm.password"
-              className="
-                appearance-none
-                border
-                pl-12
-                border-gray-100
-                shadow-sm
-                focus:shadow-md focus:placeholder-gray-600
-                transition
-                rounded-md
-                w-full
-                py-3
-                text-gray-600
-                leading-tight
-                focus:outline-none focus:ring-gray-600 focus:shadow-outline
-              "
-              type="password"
-              name="password"
-              placeholder="********"
-              required
-            />
-            <div className="absolute left-0 inset-y-0 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-7 w-7 ml-3 text-gray-400 p-1"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="mt-4 flex items-center text-gray-500">
-            <input type="checkbox" id="remember" name="remember" className="mr-3" />
-            <label htmlFor="remember">Remember me</label>
-          </div>
-          <div className="flex items-center justify-center mt-8">
-            <button
-              className="
-                  text-white
-                  py-2
-                  px-4
-                  uppercase
-                  rounded
-                  bg-indigo-500
-                  hover:bg-indigo-600
-                  shadow
-                  hover:shadow-lg
-                  font-medium
-                  transition
-                  transform
-                  hover:-translate-y-0.5
-                "
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   )

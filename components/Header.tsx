@@ -103,7 +103,7 @@ export default function Header(props: any) {
                 py-2.5 
                 text-center"
               type="button"
-              onClick={ signInWithTwitter }>
+              onClick={ signInWithGoogle }>
               login
             </button>
           }
