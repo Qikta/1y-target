@@ -127,6 +127,10 @@ export default function useUser() {
     }
   }
 
+  function signInWithTwitter() {
+    supabase.auth.signIn({ provider: "twitter" });
+  }
+
   function signInWithGoogle() {
     supabase.auth.signIn({ provider: "google" });
   }
@@ -143,6 +147,7 @@ export default function useUser() {
   return {
     session,
     // user,
+    signInWithTwitter,
     signInWithGoogle,
     signInWithGithub,
     signOut,

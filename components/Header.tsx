@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Header(props: any) {
-  const { signOut, signInWithGoogle, profile } = useUser()
+  const { signOut, signInWithGoogle, profile, signInWithTwitter } = useUser()
   const session = supabase.auth.session()
 
   return (
     <header>
-      <nav className="container flex justify-between py-8 px-4 mx-auto bg-white max-w-screen-lg">
+      <nav className="container flex justify-between py-8 mx-auto bg-white max-w-screen-xl">
         <div className="flex items-center">
           <Link href="/" passHref>
             <h2 className="text-3xl font-medium">One Year Target</h2>
@@ -103,7 +103,7 @@ export default function Header(props: any) {
                 py-2.5 
                 text-center"
               type="button"
-              onClick={ signInWithGoogle }>
+              onClick={ signInWithTwitter }>
               login
             </button>
           }
