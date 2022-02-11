@@ -1,6 +1,8 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import headerPNG from '../public/header.png'
 export const TopSection = (props: any) => {
+  const router = useRouter()
   return (
     <div className="py-12 bg-gray-100 md:py-24">
       <div className="grid max-w-screen-xl px-6 mx-auto lg:px-8 xl:px-4 md:grid-cols-4 xl:grid-cols-5 gap-x-12 lg:gap-x-20">
@@ -26,6 +28,7 @@ export const TopSection = (props: any) => {
                 Get started
               </button>
               <button
+                onClick={() => router.push('about')}
                 className="
                   inline-block
                   px-5
