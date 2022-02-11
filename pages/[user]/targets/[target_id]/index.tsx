@@ -110,6 +110,25 @@ const Main = () => {
             </div>
           </div>
 
+          { target.is_complete ?
+          <div className="relative pt-1">
+            <div className="flex my-2 items-center justify-between">
+              <div>
+                <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">
+                  Successed
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-xs font-semibold inline-block text-green-600">
+                  100%
+                </span>
+              </div>
+            </div>
+            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-400">
+              <div className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"></div>
+            </div>
+          </div>
+          :
           <div className="relative pt-1">
             <div className="flex my-2 items-center justify-between">
               <div>
@@ -127,6 +146,7 @@ const Main = () => {
               <div style={{ width: `${target.value}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-amber-500"></div>
             </div>
           </div>
+        }
 
           { profile?.user_name === target.user_name &&
             <div className="flex justify-end">

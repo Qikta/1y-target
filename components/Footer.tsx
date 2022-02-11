@@ -6,7 +6,7 @@ export default function Footer () {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
   return (
     <footer className="footer bg-gray-100 relative pt-1 border-b-2">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 max-w-screen-xl">
         <div className="sm:flex sm:mt-8">
           <div className="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
             <div className="flex flex-col">

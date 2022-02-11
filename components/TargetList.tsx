@@ -30,7 +30,7 @@ if (loading) return (
 if (!targetList.length) return <div className="container my-8 mx-auto px-4 md:px-12">missing data...</div>
 
 return (
-    <div className="container my-8 mx-auto px-4 md:px-12">
+    <div className="container my-8 mx-auto px-4 md:px-12 max-w-screen-xl">
       <div className="flex flex-wrap -mx-1 lg:-mx-4">
          <div className="w-full px-4">
             <div className="text-center mx-auto mb-12 lg:mb-20 max-w-[510px]">
