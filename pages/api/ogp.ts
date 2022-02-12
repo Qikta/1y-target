@@ -70,12 +70,12 @@ const createOgp = async (
     ctx.save()
 
     // ユーザーネームの描画
-    ctx.font = 'bold 30px sans-serif'
+    ctx.font = '40px sans-serif'
     ctx.textAlign = 'left'
     ctx.fillText(
       user_name,
       WIDTH - offset.x - radius * 2,
-      HEIGHT - offset.y - radius
+      HEIGHT - offset.y - 30
     )
 
     ctx.restore()
