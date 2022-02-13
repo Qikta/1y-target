@@ -20,13 +20,13 @@ export interface ITarget  {
 }
 
 export interface ITargetForm {
-  id?: number
   user_name: string
   avatar_url?: string
   targetDetail: ITargetFormDetail
 }
 
 export interface ITargetFormDetail {
+  id?: number
   title: string
   description?: string
   value: number
@@ -118,11 +118,13 @@ export default function useTarget() {
     if (user !== null) {
       try {
         setLoading(true);
-        const { error } = await supabase.from('targets').update([request.targetDetail]).match({id: request.id})
+        if (request.targetDetail.id) {
+          const { error } = await supabase.from('targets').update([request.targetDetail]).match({id: request.targetDetail.id})
+          if (error) { throw error}
+        }
 
-        if (error) { throw error}
-
-        router.push(`${request.user_name}`)
+        router.push('/')
+        router.reload()
       } catch(err) {
         alert(err)
       } finally {
