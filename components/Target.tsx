@@ -1,9 +1,9 @@
 import { useContext } from "react"
 import { Context } from "./TargetList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function Target (props: any) {
   // const targetContext = useContext(Context)
@@ -34,7 +34,7 @@ export default function Target (props: any) {
               </div>
           </div>
 
-          <footer className="flex items-center justify-between leading-none p-2 md:p-4">
+          <footer className="flex justify-between leading-none p-2 md:p-4">
             <div className="flex items-center no-underline hover:underline text-black">
               <Link href={{pathname: '/[user]', query: { user: props.target.user_name }}} passHref>
                 { props.target.avater_url ?
@@ -65,11 +65,12 @@ export default function Target (props: any) {
                 <p className="text-gray-600">{ props.target.created_date }</p>
               </div>
             </div>
-            <a className="no-underline text-grey-darker hover:text-red-dark" href="#">
-              <span className="hidden">Like</span>
-              {/* @ts-ignore */}
-              <FontAwesomeIcon icon={faHeart}  />
-            </a>
+            <div className="flex justify-end items-center">
+              <a className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" href="#">
+                {/* @ts-ignore */}
+                <FontAwesomeIcon icon={faHeart} />
+              </a>
+            </div>
           </footer>
         </article>
       </Link>

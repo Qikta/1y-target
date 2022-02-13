@@ -13,7 +13,6 @@ import useUser from '../../hooks/useUser'
 import { definitions } from '../../types/entities/supabase'
 import { supabase } from '../../utils/supabaseClient'
 
-// @ts-ignore
 const Main = () => {
   const {targetList, profile} = useContext(GlobalContext)
   const router = useRouter()
@@ -23,8 +22,8 @@ const Main = () => {
   const userInfo: ITarget = userTargetList[0]
 
   return (
-    <div className='container my-8 mx-auto px-4 md:px-12 max-w-screen-xl'>
-      <div className="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
+    <div className='container my-8 mx-auto px-4 md:px-12'>
+      <div className="flex items-center mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
         <div className="sm:w-40 sm:h-40 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
         { userInfo?.avater_url ?
           <button className='rounded-full bg-gray-200 mx-auto'>
@@ -50,27 +49,29 @@ const Main = () => {
           }
         </div>
         <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-          <div className='flex'>
-            <h2 className="text-gray-900 text-xl title-font font-medium py-2 px-4">{ userInfo?.user_name }</h2>
+          <div className='flex justify-between'>
+            <h1 className="flex text-gray-900 text-2xl title-font font-medium">{ userInfo?.user_name }</h1>
             { profile?.user_name == userInfo?.user_name && 
-              <button className='ml-3 bg-transparent hover:bg-amber-300 text-amber-500 font-semibold hover:text-white py-1 px-2 border border-amber-500 hover:border-transparent rounded' onClick={() => router.push('/settings/profile')}>Edit Profile</button>
+            <div className='flex justify-end ml-3'>
+              <button className='text-sm bg-transparent hover:bg-amber-300 text-amber-300  hover:text-white py-1 px-5 border border-amber-300 hover:border-transparent rounded-full' onClick={() => router.push('/settings/profile')}>Edit Profile</button>
+            </div>
             }
           </div>
-          <p>{userTargetList.length}Target</p>
+          {/* <p>{userTargetList.length}Target</p> */}
           <p className="leading-relaxed text-base">user description</p>
-          <div className='flex'>
-            {/* <a className="mt-3 text-grey-darker hover:text-red-dark" href='#'> */}
+          <div className='mt-3'>
+            <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
               {/* @ts-ignore */}
-              {/* <FontAwesomeIcon icon='fa-twitter' />
-            </a> */}
-            {/* <a className="mt-3 text-indigo-500 inline-flex items-center" href='#'> */}
-              {/* @ts-ignore */}
-              {/* <FontAwesomeIcon icon={faInstagram}  />
+              <FontAwesomeIcon icon={faTwitter} />
             </a>
-            <a className="mt-3 text-indigo-500 inline-flex items-center" href='#'> */}
+            <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
               {/* @ts-ignore */}
-              {/* <FontAwesomeIcon icon={faLink}  />
-            </a> */}
+              <FontAwesomeIcon icon={faInstagram}  />
+            </a>
+            <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
+              {/* @ts-ignore */}
+              <FontAwesomeIcon icon={faLink}  />
+            </a>
           </div>
         </div>
       </div>
