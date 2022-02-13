@@ -12,7 +12,7 @@ export default function Header(props: any) {
 
   return (
     <header>
-      <nav className="container flex justify-between py-8 mx-auto bg-white max-w-screen-xl">
+      <nav className="container flex justify-between px-2 py-8 mx-auto bg-white">
         <div className="flex items-center">
           <Link href="/" passHref>
             <h2 className="text-3xl font-medium">One Year Target</h2>
@@ -54,7 +54,7 @@ export default function Header(props: any) {
               />
             </svg>
           </a> */}
-          <button className="rounded-full bg-gray-200">
+          <button className="block rounded-full bg-gray-200">
             { profile ?
             <Link href={{pathname: '/[user]', query: { user: profile.user_name }}} passHref>
               <img className="w-10 h-10 rounded-full m-1" src={profile.avatar_url} alt="Avatar of Jonathan Reinink" />  
@@ -100,7 +100,7 @@ export default function Header(props: any) {
                 font-medium 
                 rounded-lg 
                 text-sm 
-                px-5 
+                px-5
                 py-2.5 
                 text-center"
               type="button"
@@ -115,7 +115,7 @@ export default function Header(props: any) {
               font-medium 
               rounded-lg 
               text-sm 
-              px-5 
+              px-5
               py-2.5 
               text-center
               "
