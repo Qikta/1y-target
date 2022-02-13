@@ -151,17 +151,9 @@ const Main = () => {
           { profile?.user_name === target.user_name &&
             <div className="flex justify-end">
               <button onClick={editButton} className="
-                inline-block
-                px-5
-                py-2
-                font-semibold
-                text-white
-                rounded-lg
-                focus:outline-none
-                bg-amber-400
-                hover:bg-amber-600"
+                text-sm bg-transparent hover:bg-amber-300 text-amber-300  hover:text-white py-1 px-5 border border-amber-300 hover:border-transparent rounded-full"
               >
-                Edit
+                Edit Target
               </button>
             </div>
           }
