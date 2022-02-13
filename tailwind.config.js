@@ -12,5 +12,24 @@ module.exports = {
       // }
     }
   },
-  plugins: [],
+  plugins: [
+    function({addComponents}) {
+      addComponents({
+        ".container": {
+          "@screen sm": {
+            maxWidth: "600px",
+          },
+          "@screen md": {
+            maxWidth: "700px",
+          },
+          "@screen lg": {
+            maxWidth: "900px",
+          },
+          "@screen xl": {
+            maxWidth: "1200px",
+          },
+        }
+      })
+    },
+  ],
 }
