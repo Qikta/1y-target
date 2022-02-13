@@ -5,7 +5,7 @@ export const TopSection = (props: any) => {
   const router = useRouter()
   return (
     <div className="py-12 bg-gray-100 md:py-24">
-      <div className="grid max-w-screen-xl px-6 mx-auto lg:px-8 xl:px-4 md:grid-cols-4 xl:grid-cols-5 gap-x-12 lg:gap-x-20">
+      <div className="grid max-w-screen-2xl px-6 mx-auto lg:px-8 xl:px-4 md:grid-cols-4 xl:grid-cols-5 gap-x-12 lg:gap-x-20">
         <div className="self-center order-2 col-span-2 mt-12 md:order-1 md:mt-0">
           <h1 className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl md:mb-4 lg:mb-8">One Year Target</h1>
           <p className="mb-6 text-lg text-gray-600 xl:text-xl lg:mb-8 xl:mb-10">

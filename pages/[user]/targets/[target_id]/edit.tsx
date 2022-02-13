@@ -28,7 +28,7 @@ const Edit = () => {
     }
   }
     return (
-      <div className="container justify-center">
+      <div className="container justify-center mx-auto p-10">
         <TargetForm target={target} mode='EDIT' />
       </div>
     )

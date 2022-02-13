@@ -119,7 +119,7 @@ export default function ProfileForm (props: any) {
             id="description"
             cols={30}
             rows={10}
-            placeholder="whrite here.."
+            placeholder="write here.."
             className="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-amber-500"
             defaultValue={profile?.self_description}
             {...register('self_description')}
