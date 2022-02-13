@@ -1,5 +1,8 @@
+import { User } from '@supabase/gotrue-js';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { SetStateAction, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { definitions } from '../types/entities/supabase';
 import { generateOgpPath } from '../utils/generateOgpPath';
 import { supabase } from '../utils/supabaseClient'
@@ -27,7 +30,7 @@ export interface IProfileForm {
 
 export default function useUser() {
   const [session, setSession] = useState()
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState<IProfile>();
   const router = useRouter()
@@ -37,6 +40,12 @@ export default function useUser() {
       (event, session) => {
         // @ts-ignore
         setSession(session)
+        // fetch("/api/auth", {
+        //   method: "POST",
+        //   headers: new Headers({ "Content-Type": "application/json" }),
+        //   credentials: "same-origin",
+        //   body: JSON.stringify({ event, session }),
+        // }).then((res) => res.json());
       }
     );
 
@@ -45,6 +54,11 @@ export default function useUser() {
       authListener.unsubscribe()
     }
   }, [])
+
+  useEffect(() => {
+    // @ts-ignore
+    setUser(supabase.auth.user())
+  }, [session])
 
   // useEffect(() => {
   //   const setupUser = async () => {
@@ -139,14 +153,22 @@ export default function useUser() {
     supabase.auth.signIn({ provider: "github" });
   }
 
-  function signOut() {
-    supabase.auth.signOut();
+  const signOut = async () => {
+    await supabase.auth.signOut()
     location.reload()
+    // const {success} = await axios.post('/api/signout', {})
+    // .then((res) => {
+    //   return res.data
+    // })
+    // if (success) {
+    //   router.push('/')
+    //   location.reload()
+    // }
   }
 
   return {
     session,
-    // user,
+    user,
     signInWithTwitter,
     signInWithGoogle,
     signInWithGithub,

@@ -2,12 +2,13 @@ import useUser from "../hooks/useUser"
 import { supabase } from "../utils/supabaseClient"
 // @ts-ignore
 import Modal from 'react-modal'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
+import { GlobalContext } from "../context/global-state-provider";
 
 export default function Header(props: any) {
-  const { signOut, signInWithGoogle, profile, signInWithTwitter } = useUser()
-  const session = supabase.auth.session()
+  const { signOut, signInWithGoogle } = useUser()
+  const {profile, user, session} = useContext(GlobalContext)
 
   return (
     <header>
@@ -76,7 +77,7 @@ export default function Header(props: any) {
           
           }
           </button>
-          { session ?
+          { user ?
             <button 
               className="
                 block
