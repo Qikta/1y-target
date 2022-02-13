@@ -9,14 +9,11 @@ export default function Target (props: any) {
   // const targetContext = useContext(Context)
   const router = useRouter()
 
-  const targetStyle = !props.target.is_complete ? 
-    'overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-amber-400' : 'overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-green-400'
-
   return (
     <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
       <Link href={{ pathname: '/[user]/targets/[target_id]',
             query: { user: props.target.user_name, target_id: props.target.id }}} passHref>
-        <article className='overflow-hidden rounded-lg shadow-lg hover:outline hover:outline-amber-400'>
+        <article className='overflow-hidden rounded-lg shadow-md hover:shadow-lg'>
           { props.target.ogp_url &&
             <img className="block h-auto w-full" src={props.target.ogp_url} alt="ogpImage" />
           }
