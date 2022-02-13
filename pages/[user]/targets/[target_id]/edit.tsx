@@ -16,9 +16,9 @@ const Edit = () => {
 
   if (!targetData) { return <div className="container my-8 mx-auto px-4 md:px-12">missing data...</div> }
   const target: ITargetForm = {
-    id: Number(targetData.id),
     user_name: profile?.user_name ? profile.user_name : '',
     targetDetail: {
+      id: Number(targetData.id),
       title: targetData?.title || '',
       description: targetData.description,
       value: targetData.value || 0,

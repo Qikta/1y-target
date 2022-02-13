@@ -124,7 +124,7 @@ export default function useTarget() {
         }
 
         router.push('/')
-        router.reload()
+        location.reload()
       } catch(err) {
         alert(err)
       } finally {

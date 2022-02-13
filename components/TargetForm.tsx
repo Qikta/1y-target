@@ -21,7 +21,7 @@ export default function TargetForm (props: any) {
         return
       case 'EDIT':
         if(props.target) {
-          data.targetDetail.id = props?.target?.id
+          data.targetDetail.id = props?.target?.targetDetail.id
           data.user_name = props?.target?.user_name
           data.avatar_url = profile?.avatar_url ? profile?.avatar_url : ''
           editTarget(data)
