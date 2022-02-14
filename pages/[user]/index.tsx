@@ -51,10 +51,12 @@ const Main = () => {
         <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
           <div className='flex justify-between'>
             <h1 className="flex text-gray-900 text-2xl title-font font-medium">{ userInfo?.user_name }</h1>
-            { profile?.user_name == userInfo?.user_name && 
+            { profile?.user_name == userInfo?.user_name ?
             <div className='flex justify-end ml-3'>
               <button className='text-sm bg-transparent hover:bg-amber-300 text-amber-300  hover:text-white py-1 px-5 border border-amber-300 hover:border-transparent rounded-full' onClick={() => router.push('/settings/profile')}>Edit Profile</button>
             </div>
+            :
+            <></>
             }
           </div>
           {/* <p>{userTargetList.length}Target</p> */}
@@ -77,10 +79,12 @@ const Main = () => {
       </div>
       <div className='mt-16 border-gray-300 items-center'>
         <div className="flex flex-wrap -mx-1 lg:-mx-4">
-          { userTargetList &&
+          { userTargetList ?
             userTargetList.map((item, index) => (
                 <Target target={item} key={index} />
             ))
+            :
+            <></>
           }
         </div>
       </div>
