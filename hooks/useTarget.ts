@@ -133,11 +133,33 @@ export default function useTarget() {
     } else {
       alert('loginしてください')
     }
-  } 
+  }
+
+  const deleteTarget = async (request: number) => {
+    const user = supabase.auth.user()
+    if (user) {
+      try {
+        setLoading(true);
+        const { error } = await supabase.from('targets').delete().match({id: request})
+        if (error) { throw error}
+        
+
+        router.push('/')
+        location.reload()
+      } catch(err) {
+        alert(err)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      alert('loginしてください')
+    }
+  }
   return {
       targetList,
       loading,
       createTarget,
-      editTarget
+      editTarget,
+      deleteTarget
   }
 }
