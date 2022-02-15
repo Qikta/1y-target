@@ -48,7 +48,7 @@ export default function TargetForm (props: any) {
   }, [props.mode])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='bg-white rounded-lg p-8'>
+    <form onSubmit={handleSubmit(onSubmit)} className='bg-white rounded-lg'>
       { props.mode == 'CREATE' &&
         <div className="flex justify-end p-2">
           <button
@@ -138,11 +138,11 @@ export default function TargetForm (props: any) {
         </div>
       </div>
         
-      <div className="md:flex md:items-center">
+      <div className="md:flex md:items-center my-6">
         <div className="md:w-1/3"></div>
         <div className="md:w-2/3">
         <button 
-          className="shadow bg-amber-400 hover:bg-amber-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+          className="shadow w-full bg-amber-400 hover:bg-amber-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mt-4"
           type='submit'>
             { submitButtonText }
         </button>
