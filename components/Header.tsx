@@ -19,7 +19,7 @@ export default function Header(props: any) {
           </Link>
         </div>
         <div className="flex justify-end items-center space-x-2">
-          {/* <a href="#">
+          <a href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-6 h-6 text-gray-400"
@@ -53,7 +53,7 @@ export default function Header(props: any) {
                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-          </a> */}
+          </a>
           <button className="block rounded-full bg-gray-200">
             { profile ?
             <Link href={{pathname: '/[user]', query: { user: profile.user_name }}} passHref>
@@ -78,19 +78,20 @@ export default function Header(props: any) {
           }
           </button>
           { user ?
-            <button 
+            <button
               className="
                 block
                 hover:bg-gray-100
-                font-medium
-                rounded-lg
-                text-sm
+                font-medium 
+                rounded-lg 
+                text-sm 
                 px-5
-                py-2.5
-                text-center"
+                py-2.5 
+                text-center
+                "
               type="button"
-              onClick={ signOut }>
-              signOut
+              onClick={props.onClick}>
+              New OYT
             </button>
             :
             <button
@@ -108,7 +109,7 @@ export default function Header(props: any) {
               login
             </button>
           }
-          <button
+          {/* <button
             className="
               block
               hover:bg-gray-100
@@ -122,7 +123,7 @@ export default function Header(props: any) {
             type="button"
             onClick={props.onClick}>
             New OYT
-          </button>
+          </button> */}
         </div>
       </nav>
     </header>
