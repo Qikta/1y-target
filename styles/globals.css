@@ -18,3 +18,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.is-style-bg_stripe {
+  background: linear-gradient(-45deg,transparent 25%,rgba(200,200,200,.15) 25%,rgba(200,200,200,.15) 50%,transparent 50%,transparent 75%,rgba(200,200,200,.15) 75%,rgba(200,200,200,.15));
+  background-clip: padding-box;
+  background-size: 6px 6px;
+  padding: var(--swl-box_padding);
+  position: relative;
+}
