@@ -141,6 +141,27 @@ export default function useUser() {
     }
   }
 
+  const deleteUser = async () => {
+    const user = supabase.auth.user()
+    if (user) {
+      try {
+        setLoading(true);
+        const { error } = await supabase.from('users').delete().match({id: user.id})
+        if (error) { throw error}
+        
+
+        router.push('/')
+        location.reload()
+      } catch(err) {
+        alert(err)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      alert('loginしてください')
+    }
+  }
+
   function signInWithTwitter() {
     supabase.auth.signIn({ provider: "twitter" });
   }
@@ -156,14 +177,6 @@ export default function useUser() {
   const signOut = async () => {
     await supabase.auth.signOut()
     location.reload()
-    // const {success} = await axios.post('/api/signout', {})
-    // .then((res) => {
-    //   return res.data
-    // })
-    // if (success) {
-    //   router.push('/')
-    //   location.reload()
-    // }
   }
 
   return {
@@ -175,6 +188,7 @@ export default function useUser() {
     signOut,
     profile,
     loading,
-    insertProfile
+    insertProfile,
+    deleteUser
   };
 }
