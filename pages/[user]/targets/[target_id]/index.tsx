@@ -12,6 +12,9 @@ import useUser from "../../../../hooks/useUser";
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import { GlobalContext } from "../../../../context/global-state-provider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
@@ -99,14 +102,30 @@ const Main = () => {
                   <h2 className="font-medium title-font mt-4 text-gray-900 text-lg">{ target.user_name }</h2>
                 </Link>
                 <div className="w-12 h-1 bg-amber-400 rounded mt-2 mb-4"></div>
-                <p className="text-base">Raclette knausgaard hella meggs normcore williamsburg enamel pin sartorial venmo tbh hot chicken gentrify portland.</p>
+                <p className="text-sm text-gray-900">{target.user_self_description}</p>
+                <div className='mt-3'>
+                  <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href={target.user_twitter_url}>
+                    {/* @ts-ignore */}
+                    <FontAwesomeIcon icon={faTwitter} />
+                  </a>
+                  <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href={target.user_instagram_url}>
+                    {/* @ts-ignore */}
+                    <FontAwesomeIcon icon={faInstagram}  />
+                  </a>
+                  <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href={target.user_website_url}>
+                    {/* @ts-ignore */}
+                    <FontAwesomeIcon icon={faLink}  />
+                  </a>
+                </div>
               </div>
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-              <h2 className="leading-relaxed text-lg mb-4">{ target.title }</h2>
-              <p className="leading-relaxed text-lg mb-4">
-                { target.description }
-              </p>
+              <h1 className="leading-relaxed text-center text-2xl mb-4">{ target.title }</h1>
+              <div className="is-style-bg_stripe h-5/6 rounded-lg">
+                <p className="leading-relaxed text-base pl-2 pt-2">
+                  { target.description }
+                </p>
+              </div>
             </div>
           </div>
 
@@ -133,7 +152,7 @@ const Main = () => {
             <div className="flex my-2 items-center justify-between">
               <div>
                 <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-amber-600 bg-amber-200">
-                  Task in progress
+                  in progress
                 </span>
               </div>
               <div className="text-right">

@@ -17,6 +17,10 @@ export interface ITarget  {
   avater_url: string
   created_date: string
   ogp_url?: string
+  user_self_description?: string
+  user_twitter_url?: string
+  user_instagram_url?: string
+  user_website_url?: string
 }
 
 export interface ITargetForm {
@@ -67,7 +71,12 @@ export default function useTarget() {
                 is_complete: target.is_complete || false,
                 avater_url: target.avatar_url || '',
                 created_date: optionalCreateTiem?.toLocaleDateString() || '',
-                ogp_url: target.ogp_url
+                ogp_url: target.ogp_url,
+                user_self_description: target.self_description,
+                user_twitter_url: target.twitter_url,
+                user_instagram_url: target.instagram_url,
+                user_website_url: target.website
+
             })
           }
           setTargetList(targetList)
