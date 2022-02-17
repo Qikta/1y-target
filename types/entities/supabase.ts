@@ -580,6 +580,10 @@ export interface paths {
           ogp_url?: parameters["rowFilter.user_target_view.ogp_url"];
           user_name?: parameters["rowFilter.user_target_view.user_name"];
           avatar_url?: parameters["rowFilter.user_target_view.avatar_url"];
+          self_description?: parameters["rowFilter.user_target_view.self_description"];
+          twitter_url?: parameters["rowFilter.user_target_view.twitter_url"];
+          instagram_url?: parameters["rowFilter.user_target_view.instagram_url"];
+          website?: parameters["rowFilter.user_target_view.website"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -774,6 +778,14 @@ export interface definitions {
     user_name?: string;
     /** Format: text */
     avatar_url?: string;
+    /** Format: text */
+    self_description?: string;
+    /** Format: text */
+    twitter_url?: string;
+    /** Format: text */
+    instagram_url?: string;
+    /** Format: text */
+    website?: string;
   };
 }
 
@@ -920,6 +932,14 @@ export interface parameters {
   "rowFilter.user_target_view.user_name": string;
   /** Format: text */
   "rowFilter.user_target_view.avatar_url": string;
+  /** Format: text */
+  "rowFilter.user_target_view.self_description": string;
+  /** Format: text */
+  "rowFilter.user_target_view.twitter_url": string;
+  /** Format: text */
+  "rowFilter.user_target_view.instagram_url": string;
+  /** Format: text */
+  "rowFilter.user_target_view.website": string;
 }
 
 export interface operations {}
