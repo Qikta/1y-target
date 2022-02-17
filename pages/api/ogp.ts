@@ -75,7 +75,7 @@ const createOgp = async (
     ctx.fillText(
       user_name,
       WIDTH - offset.x - radius * 2,
-      HEIGHT - offset.y - 30
+      HEIGHT - offset.y - radius
     )
 
     ctx.restore()
