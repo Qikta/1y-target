@@ -26,29 +26,13 @@ export const GlobalContext = createContext<GlobalState>({
   user: undefined
 })
 
-// @ts-ignore
-// export async function getServerSideProps({ req }) {
-//   const { user } = await supabase.auth.api.getUserByCookie(req);
-//   console.log(user);
-  
-//   if (!user) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-  
-//   return { props: { user } };
-// }
 
 const GlobalStateProvider = ({children}: {children: React.ReactNode}) => {
 //   const [state, setState] = useState<GlobalState>()
   const { targetList } = useTarget()
   const { profile, session, user } = useUser()
 
-  const global = {targetList, profile, session, user }
+  const global = {targetList, profile, session, user}
 
   return (
     <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>
