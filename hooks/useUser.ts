@@ -174,9 +174,10 @@ export default function useUser() {
     supabase.auth.signIn({ provider: "github" });
   }
 
-  const signOut = async () => {
+  const signout = async () => {
     await supabase.auth.signOut()
-    location.reload()
+    router.reload()
+    // router.push('/')
   }
 
   return {
@@ -185,7 +186,7 @@ export default function useUser() {
     signInWithTwitter,
     signInWithGoogle,
     signInWithGithub,
-    signOut,
+    signout,
     profile,
     loading,
     insertProfile,

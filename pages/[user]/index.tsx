@@ -15,6 +15,7 @@ import { supabase } from '../../utils/supabaseClient'
 
 const Main = () => {
   const {targetList, profile} = useContext(GlobalContext)
+  const { signout } = useUser()
   const router = useRouter()
   const {user} = router.query
   const userTargetList = targetList.filter(item => item.user_name === user)
@@ -53,7 +54,8 @@ const Main = () => {
             <h1 className="flex text-gray-900 text-2xl title-font font-medium">{ userInfo?.user_name }</h1>
             { profile?.user_name == userInfo?.user_name ?
             <div className='flex justify-end ml-3'>
-              <button className='text-sm bg-transparent hover:bg-amber-300 text-amber-300  hover:text-white py-1 px-5 border border-amber-300 hover:border-transparent rounded-full' onClick={() => router.push('/settings/profile')}>Edit Profile</button>
+              <button className='text-sm bg-transparent hover:bg-gray-300 text-gray-300  hover:text-white py-1 px-5 ml-1 border border-gray-300 hover:border-transparent rounded-full' onClick={signout}>Logout</button>
+              <button className='text-sm bg-transparent hover:bg-amber-300 text-amber-300  hover:text-white py-1 px-5 ml-1 border border-amber-300 hover:border-transparent rounded-full' onClick={() => router.push('/settings/profile')}>Edit Profile</button>
             </div>
             :
             <></>
