@@ -1,13 +1,39 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { Context } from "./TargetList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { GlobalContext } from "../context/global-state-provider";
+import { supabase } from "../utils/supabaseClient";
 
 export default function Target (props: any) {
   // const targetContext = useContext(Context)
   const router = useRouter()
+  const {targetList, profile, user} = useContext(GlobalContext)
+  const [loading, setLoading] = useState(false);
+
+
+  const insertLike = async () => {
+    if (user) {
+      try {
+        setLoading(true);
+        const requestData = {
+          user_id: user.id,
+          target_id: props.target.id
+        }
+        const { error } = await supabase.from('likes').insert(requestData)
+
+        if (error) { throw error}
+
+        location.reload()
+      } catch(err) {
+        alert(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }
 
   return (
     <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
@@ -63,10 +89,10 @@ export default function Target (props: any) {
               </div>
             </div>
             <div className="flex justify-end items-center">
-              <a className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" href="#">
+              <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={insertLike}>
                 {/* @ts-ignore */}
                 <FontAwesomeIcon icon={faHeart} />
-              </a>
+              </button>
             </div>
           </footer>
         </article>
