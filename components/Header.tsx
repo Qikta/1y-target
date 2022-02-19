@@ -7,7 +7,7 @@ import Link from "next/link";
 import { GlobalContext } from "../context/global-state-provider";
 
 export default function Header(props: any) {
-  const { signOut, signInWithGoogle } = useUser()
+  const { signInWithGoogle } = useUser()
   const {profile, user, session} = useContext(GlobalContext)
 
   return (
