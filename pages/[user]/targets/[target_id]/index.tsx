@@ -122,7 +122,7 @@ const Main = () => {
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
               <h1 className="leading-relaxed text-center text-2xl mb-4">{ target.title }</h1>
               <div className="is-style-bg_stripe h-5/6 rounded-lg">
-                <p className="leading-relaxed text-base pl-2 pt-2">
+                <p className="leading-relaxed text-base pl-2 py-2">
                   { target.description }
                 </p>
               </div>
