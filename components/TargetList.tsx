@@ -17,9 +17,8 @@ export const Context = createContext<ITarget>({
 })
 
 export default function TargetList() {
-  const { targetList, loading } = useTarget()
-  const [stateProp, setStateProp] = useState<ITarget>()
-  const glovalContext = useContext(GlobalContext)
+  const { loading } = useTarget()
+  const {targetList} = useContext(GlobalContext)
 
 if (loading) return (
   <div className="flex justify-center py-16 ">
@@ -54,7 +53,7 @@ return (
       </div>
       <div className="flex flex-wrap -mx-1 lg:-mx-4">
         {
-          glovalContext.targetList.map((item, index) => (
+          targetList.map((item, index) => (
             <Target target={item} key={index} />
           ))
         }
