@@ -39,8 +39,14 @@ export interface ITargetFormDetail {
   is_complete: boolean
 }
 
+export interface IFavorite {
+  user_id: string,
+  target_id: string
+}
+
 export default function useTarget() {
   const[targetList, setTargetList] = useState<ITarget[]>([])
+  const [favoriteList, setfavoriteList] = useState<Array<IFavorite>>([])
   const [loading, setLoading] = useState(false);
   const [targetForm, setTargetForm] = useState<ITargetForm>()
   const router = useRouter()
@@ -57,18 +63,22 @@ export default function useTarget() {
         if (error) {
             throw error
         }
+        setupFavoriteList()
+        let tempolaryTargetList: Array<ITarget> = []
 
         if (data) {
           for (const target of data) {
             const optionalCreateTiem = target.created_at !== undefined ? new Date(target.created_at) : undefined
+            const target_favorite_list = favoriteList.filter(item => item.target_id === String(target.id))
 
-            targetList.push({
+            tempolaryTargetList.push({
                 id: String(target.id),
                 title: target.title || '',
                 user_name: target.user_name || '',
                 description: target.description || '',
                 value: target.value || 0,
                 is_complete: target.is_complete || false,
+                favorite_count: target_favorite_list.length || 0,
                 avater_url: target.avatar_url || '',
                 created_date: optionalCreateTiem?.toLocaleDateString() || '',
                 ogp_url: target.ogp_url,
@@ -76,10 +86,10 @@ export default function useTarget() {
                 user_twitter_url: target.twitter_url,
                 user_instagram_url: target.instagram_url,
                 user_website_url: target.website
-
+                
             })
           }
-          setTargetList(targetList)
+          setTargetList(tempolaryTargetList)
         }
       } catch (err) {
           alert (err)
@@ -90,6 +100,33 @@ export default function useTarget() {
     setupTargetList()
   }, [])
 
+  useEffect(() => {
+    setupFavoriteList()
+  }, [])
+
+  const setupFavoriteList = async () => {
+    try {
+      const { data, error } = await supabase
+        .from<definitions['likes']>('likes')
+        .select('user_id, target_id')
+
+      if (error) { throw error }
+
+      let tempolaryFavoriteList: Array<IFavorite> = []
+
+      if (data) {
+        for (const favorite of data){
+          tempolaryFavoriteList.push({
+            user_id: favorite.user_id,
+            target_id: String(favorite.target_id)
+          })
+        }
+        setfavoriteList(tempolaryFavoriteList)
+      }
+    } catch (err) {
+      alert(err)
+    }
+  }
 
   const createTarget = async (request: ITargetForm) => {
     const user = supabase.auth.user()
@@ -164,11 +201,14 @@ export default function useTarget() {
       alert('loginしてください')
     }
   }
+
+
   return {
       targetList,
       loading,
       createTarget,
       editTarget,
-      deleteTarget
+      deleteTarget,
+      favoriteList
   }
 }

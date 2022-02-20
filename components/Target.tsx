@@ -3,16 +3,18 @@ import { Context } from "./TargetList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { GlobalContext } from "../context/global-state-provider";
 import { supabase } from "../utils/supabaseClient";
 
 export default function Target (props: any) {
   // const targetContext = useContext(Context)
   const router = useRouter()
-  const {targetList, profile, user} = useContext(GlobalContext)
+  const {targetList, profile, user, favoriteList} = useContext(GlobalContext)
   const [loading, setLoading] = useState(false);
 
+  // const target_favorite_list = favoriteList.filter(item => item.target_id === props.target.id)
 
   const insertLike = async () => {
     if (user) {
@@ -91,8 +93,10 @@ export default function Target (props: any) {
             <div className="flex justify-end items-center">
               <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={insertLike}>
                 {/* @ts-ignore */}
-                <FontAwesomeIcon icon={faHeart} />
+                {/* <FontAwesomeIcon icon={faHeartSolid} /> */}
+                <FontAwesomeIcon icon={faHeartRegular} />
               </button>
+              <p className="pl-1">{props.target.favorite_count}</p>
             </div>
           </footer>
         </article>

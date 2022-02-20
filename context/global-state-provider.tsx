@@ -1,6 +1,6 @@
 import { Session, User } from "@supabase/supabase-js";
 import React, { Children, useState, createContext, useEffect, } from "react";
-import useTarget, { ITarget } from "../hooks/useTarget";
+import useTarget, { IFavorite, ITarget } from "../hooks/useTarget";
 import useUser, { IProfile } from "../hooks/useUser";
 import { supabase } from "../utils/supabaseClient";
 
@@ -9,6 +9,7 @@ export interface GlobalState {
   profile?: IProfile
   session?: Session
   user?: User
+  favoriteList: Array<IFavorite>
 }
 
 export const GlobalContext = createContext<GlobalState>({
@@ -23,16 +24,17 @@ export const GlobalContext = createContext<GlobalState>({
     website: ''
   },
   session: undefined,
-  user: undefined
+  user: undefined,
+  favoriteList: []
 })
 
 
 const GlobalStateProvider = ({children}: {children: React.ReactNode}) => {
 //   const [state, setState] = useState<GlobalState>()
-  const { targetList } = useTarget()
+  const { targetList, favoriteList } = useTarget()
   const { profile, session, user } = useUser()
 
-  const global = {targetList, profile, session, user}
+  const global = {targetList, profile, session, user, favoriteList}
 
   return (
     <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>
