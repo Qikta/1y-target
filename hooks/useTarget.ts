@@ -40,6 +40,7 @@ export interface ITargetFormDetail {
 }
 
 export interface IFavorite {
+  id: number,
   user_id: string,
   target_id: string
 }
@@ -63,13 +64,12 @@ export default function useTarget() {
         if (error) {
             throw error
         }
-        setupFavoriteList()
         let tempolaryTargetList: Array<ITarget> = []
-
+        
         if (data) {
           for (const target of data) {
             const optionalCreateTiem = target.created_at !== undefined ? new Date(target.created_at) : undefined
-            const target_favorite_list = favoriteList.filter(item => item.target_id === String(target.id))
+            // const target_favorite_list = favoriteList.filter(item => item.target_id === String(target.id))
 
             tempolaryTargetList.push({
                 id: String(target.id),
@@ -78,7 +78,7 @@ export default function useTarget() {
                 description: target.description || '',
                 value: target.value || 0,
                 is_complete: target.is_complete || false,
-                favorite_count: target_favorite_list.length || 0,
+                // favorite_count: target_favorite_list.length || 0,
                 avater_url: target.avatar_url || '',
                 created_date: optionalCreateTiem?.toLocaleDateString() || '',
                 ogp_url: target.ogp_url,
@@ -108,7 +108,7 @@ export default function useTarget() {
     try {
       const { data, error } = await supabase
         .from<definitions['likes']>('likes')
-        .select('user_id, target_id')
+        .select('id, user_id, target_id')
 
       if (error) { throw error }
 
@@ -117,6 +117,7 @@ export default function useTarget() {
       if (data) {
         for (const favorite of data){
           tempolaryFavoriteList.push({
+            id: favorite.id,
             user_id: favorite.user_id,
             target_id: String(favorite.target_id)
           })

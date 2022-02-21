@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Context } from "./TargetList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from "next/router";
@@ -9,32 +9,63 @@ import { GlobalContext } from "../context/global-state-provider";
 import { supabase } from "../utils/supabaseClient";
 
 export default function Target (props: any) {
-  // const targetContext = useContext(Context)
   const router = useRouter()
-  const {targetList, profile, user, favoriteList} = useContext(GlobalContext)
+  const {user, favoriteList} = useContext(GlobalContext)
   const [loading, setLoading] = useState(false);
+  const [targetFavorite, setTargetFavorite] = useState(0)
+  const [isFavorited, setIsFavorited] = useState(false)
+  const target_favorite_list = favoriteList.filter(item => item.target_id === props.target.id)
+  const userFavoriteTarget = target_favorite_list.find(targetFavorite => targetFavorite.user_id === user?.id)
 
-  // const target_favorite_list = favoriteList.filter(item => item.target_id === props.target.id)
+  useEffect(() => {
+    setTargetFavorite(target_favorite_list.length)
+    userFavoriteTarget ? setIsFavorited(true) : setIsFavorited(false)
+  }, [])
 
-  const insertLike = async () => {
+  const handleLike = async () => {
     if (user) {
+      if (!isFavorited) {
+        try {
+          setLoading(true);
+          setTargetFavorite(targetFavorite + 1)
+          const requestData = {
+            user_id: user.id,
+            target_id: props.target.id
+          }
+          const { error } = await supabase.from('likes').insert(requestData)
+  
+          if (error) { throw error}
+          location.reload()
+        } catch(err) {
+          setTargetFavorite(targetFavorite - 1)
+          alert(err)
+        } finally {
+          setLoading(false)
+        }
+      } else {
+        deleteLike()
+      }
+    }
+  }
+
+  const deleteLike = async () => {
+    if(user) {
       try {
         setLoading(true);
-        const requestData = {
-          user_id: user.id,
-          target_id: props.target.id
-        }
-        const { error } = await supabase.from('likes').insert(requestData)
+        setTargetFavorite(targetFavorite - 1)
+        const { error } = await supabase.from('likes').delete().match({id: userFavoriteTarget?.id})
 
         if (error) { throw error}
-
         location.reload()
+
       } catch(err) {
+        setTargetFavorite(targetFavorite + 1)
         alert(err)
       } finally {
         setLoading(false)
       }
     }
+    
   }
 
   return (
@@ -91,12 +122,16 @@ export default function Target (props: any) {
               </div>
             </div>
             <div className="flex justify-end items-center">
-              <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={insertLike}>
-                {/* @ts-ignore */}
-                {/* <FontAwesomeIcon icon={faHeartSolid} /> */}
-                <FontAwesomeIcon icon={faHeartRegular} />
+              <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={handleLike}>
+                { isFavorited ?
+                  // @ts-ignore
+                  <FontAwesomeIcon icon={faHeartSolid} />
+                  :
+                  // @ts-ignore
+                  <FontAwesomeIcon icon={faHeartRegular} />
+                }
               </button>
-              <p className="pl-1">{props.target.favorite_count}</p>
+              <p className="pl-1">{targetFavorite}</p>
             </div>
           </footer>
         </article>
