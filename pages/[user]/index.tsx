@@ -49,7 +49,7 @@ const Main = () => {
           </button>
           }
         </div>
-        <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+        <div className="flex-grow sm:text-left justify-center mt-6 sm:mt-0">
           <div className='flex justify-between'>
             <h1 className="flex text-gray-900 text-2xl title-font font-medium">{ userInfo?.user_name }</h1>
             { profile?.user_name == userInfo?.user_name ?
@@ -63,7 +63,7 @@ const Main = () => {
           </div>
           {/* <p>{userTargetList.length}Target</p> */}
           <p className="leading-relaxed text-base">user description</p>
-          <div className='flex justify-center mt-3'>
+          <div className='flex mt-3'>
             <a className="w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
               {/* @ts-ignore */}
               <FontAwesomeIcon icon={faTwitter} />
