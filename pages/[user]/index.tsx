@@ -64,33 +64,19 @@ const Main = () => {
           {/* <p>{userTargetList.length}Target</p> */}
           <p className="leading-relaxed text-base">user description</p>
           <div className='flex mt-3'>
-            <a className="w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
+            <a className="w-5 h-5 mr-3 text-gray-400 items-center" href={userInfo.user_twitter_url}>
               {/* @ts-ignore */}
               <FontAwesomeIcon icon={faTwitter} />
             </a>
-            <a className="w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
+            <a className="w-5 h-5 mr-3 text-gray-400 items-center" href={userInfo.user_instagram_url}>
               {/* @ts-ignore */}
               <FontAwesomeIcon icon={faInstagram}  />
             </a>
-            <a className="w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
+            <a className="w-5 h-5 mr-3 text-gray-400 items-center" href={userInfo.user_website_url}>
               {/* @ts-ignore */}
               <FontAwesomeIcon icon={faLink}  />
             </a>
           </div>
-          {/* <div className='mt-3'>
-            <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
-              @ts-ignore
-              <FontAwesomeIcon icon={faTwitter} />
-            </a>
-            <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
-              @ts-ignore
-              <FontAwesomeIcon icon={faInstagram}  />
-            </a>
-            <a className="inline-flex justify-center w-5 h-5 mr-3 text-gray-400 items-center" href='#'>
-              @ts-ignore
-              <FontAwesomeIcon icon={faLink}  />
-            </a>
-          </div> */}
         </div>
       </div>
       <div className='mt-16 border-gray-300 items-center'>
