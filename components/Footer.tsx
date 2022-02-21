@@ -12,13 +12,13 @@ export default function Footer () {
           <div className="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
             <div className="flex flex-col">
               <span className="font-bold text-gray-700 uppercase mb-2">About</span>
-              <span className="my-2"><Link href={'/about'}><a className="text-gray-700 text-md hover:text-gray-500">OYTについて</a></Link></span>
+              <span className="my-2"><Link href={'/about'}><a className="text-gray-700 text-md hover:text-gray-500">About OYT</a></Link></span>
               {/* <span className="my-2"><a href="#" className="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
               <span className="my-2"><a href="#" className="text-blue-700  text-md hover:text-blue-500">link 1</a></span> */}
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">Legal</span>
-              <span className="my-2"><Link href={'/terms'}><a className="text-gray-700 text-md hover:text-gray-500">利用規約</a></Link></span>
+              <span className="my-2"><Link href={'/terms'}><a className="text-gray-700 text-md hover:text-gray-500">Terms</a></Link></span>
               <span className="my-2"><Link href={'/privacy'}><a className="text-gray-700 text-md hover:text-gray-500">Privacy Policy</a></Link></span>
               {/* <span className="my-2"><a href="#" className="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
               <span className="my-2"><a href="#" className="text-blue-700 text-md hover:text-blue-500">link 1</a></span> */}
