@@ -15,18 +15,105 @@ import { GlobalContext } from "../../../../context/global-state-provider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons"
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
+// @ts-ignore
+import Modal from 'react-modal'
+import Auth from "../../../../components/Auth"
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,0.7)"
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 // @ts-ignore
 const HeatMap = dynamic(() => import("@uiw/react-heat-map").then((mod) => mod.default),{ ssr: false });
 
 // @ts-ignore
 const Main = () => {
-  const {targetList, profile} = useContext(GlobalContext)
+  const {targetList, profile, favoriteList, loginUser} = useContext(GlobalContext)
+  const [loading, setLoading] = useState(false);
   const router = useRouter()
   const {user, target_id} = router.query
   const target = targetList.find(item => item.id === target_id)
-
   const { width, height } = useWindowSize()
+
+  const [targetFavorite, setTargetFavorite] = useState(0)
+  const [isFavorited, setIsFavorited] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const target_favorite_list = favoriteList.filter(item => item.target_id === target?.id)
+  const userFavoriteTarget = target_favorite_list.find(targetFavorite => targetFavorite.user_id === loginUser?.id)
+
+  useEffect(() => {
+    setTargetFavorite(target_favorite_list.length)
+    userFavoriteTarget ? setIsFavorited(true) : setIsFavorited(false)
+  }, [])
+
+  const handleLike = async () => {
+    if (loginUser) {
+      if (!isFavorited) {
+        try {
+          setLoading(true);
+          setTargetFavorite(targetFavorite + 1)
+          const requestData = {
+            user_id: loginUser.id,
+            target_id: target?.id
+          }
+          const { error } = await supabase.from('likes').insert(requestData)
+  
+          if (error) { throw error}
+          location.reload()
+        } catch(err) {
+          setTargetFavorite(targetFavorite - 1)
+          alert(err)
+        } finally {
+          setLoading(false)
+        }
+      } else {
+        deleteLike()
+      }
+    }else {
+      openModal()
+    }
+  }
+
+  const deleteLike = async () => {
+    if(loginUser) {
+      try {
+        setLoading(true);
+        setTargetFavorite(targetFavorite - 1)
+        const { error } = await supabase.from('likes').delete().match({id: userFavoriteTarget?.id})
+
+        if (error) { throw error}
+        location.reload()
+
+      } catch(err) {
+        setTargetFavorite(targetFavorite + 1)
+        alert(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }
+
+  const openModal = () => {
+    setShowModal(true)
+  }
+  const closeModal = () => {
+    setShowModal(false)
+  }
 
   const heatmapValue: Array<HeatMapValue> = [
     { date: '2022/01/11', count:2, content: '' },
@@ -71,6 +158,18 @@ const Main = () => {
             { target.ogp_url &&
               <img alt="content" className="object-cover object-center h-full w-full" src={target.ogp_url} />
             }
+          </div>
+          <div className="flex justify-center py-5">
+            <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={handleLike}>
+              { isFavorited ?
+                // @ts-ignore
+                <FontAwesomeIcon icon={faHeartSolid} />
+                :
+                // @ts-ignore
+                <FontAwesomeIcon icon={faHeartRegular} />
+              }
+            </button>
+            <p className="pl-1">{targetFavorite}</p>
           </div>
           
           <div className="flex flex-col sm:flex-row mt-10">
@@ -202,6 +301,18 @@ const Main = () => {
             </TwitterShareButton>
           </div>
         </div>
+        <Modal
+        isOpen={showModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="auth Modal"
+        >
+          <div id="overlay">
+            <div id="modalContent">
+              <Auth />
+            </div>
+          </div>
+        </Modal>
       </div>
     </>
     

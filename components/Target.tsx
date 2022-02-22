@@ -1,72 +1,46 @@
 import { useContext, useEffect, useState } from "react"
-import { Context } from "./TargetList"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
-import { GlobalContext } from "../context/global-state-provider";
-import { supabase } from "../utils/supabaseClient";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from "next/router"
+import Link from "next/link"
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons"
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
+import { GlobalContext } from "../context/global-state-provider"
+import { supabase } from "../utils/supabaseClient"
+// @ts-ignore
+import Modal from 'react-modal'
+import Auth from "./Auth"
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,0.7)"
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 export default function Target (props: any) {
   const router = useRouter()
-  const {user, favoriteList} = useContext(GlobalContext)
+  const {loginUser, favoriteList} = useContext(GlobalContext)
   const [loading, setLoading] = useState(false);
   const [targetFavorite, setTargetFavorite] = useState(0)
   const [isFavorited, setIsFavorited] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const target_favorite_list = favoriteList.filter(item => item.target_id === props.target.id)
-  const userFavoriteTarget = target_favorite_list.find(targetFavorite => targetFavorite.user_id === user?.id)
+  const userFavoriteTarget = target_favorite_list.find(targetFavorite => targetFavorite.user_id === loginUser?.id)
 
   useEffect(() => {
     setTargetFavorite(target_favorite_list.length)
     userFavoriteTarget ? setIsFavorited(true) : setIsFavorited(false)
   }, [])
-
-  const handleLike = async () => {
-    if (user) {
-      if (!isFavorited) {
-        try {
-          setLoading(true);
-          setTargetFavorite(targetFavorite + 1)
-          const requestData = {
-            user_id: user.id,
-            target_id: props.target.id
-          }
-          const { error } = await supabase.from('likes').insert(requestData)
-  
-          if (error) { throw error}
-          location.reload()
-        } catch(err) {
-          setTargetFavorite(targetFavorite - 1)
-          alert(err)
-        } finally {
-          setLoading(false)
-        }
-      } else {
-        deleteLike()
-      }
-    }
-  }
-
-  const deleteLike = async () => {
-    if(user) {
-      try {
-        setLoading(true);
-        setTargetFavorite(targetFavorite - 1)
-        const { error } = await supabase.from('likes').delete().match({id: userFavoriteTarget?.id})
-
-        if (error) { throw error}
-        location.reload()
-
-      } catch(err) {
-        setTargetFavorite(targetFavorite + 1)
-        alert(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-    
-  }
 
   return (
     <div className="my-1 px-1 w-full sm:w-1/2 md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
@@ -122,7 +96,7 @@ export default function Target (props: any) {
               </div>
             </div>
             <div className="flex justify-end items-center">
-              <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={handleLike}>
+              <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark">
                 { isFavorited ?
                   // @ts-ignore
                   <FontAwesomeIcon icon={faHeartSolid} />
