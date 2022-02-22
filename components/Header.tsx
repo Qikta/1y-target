@@ -8,7 +8,7 @@ import { GlobalContext } from "../context/global-state-provider";
 
 export default function Header(props: any) {
   const { signInWithGoogle } = useUser()
-  const {profile, user, session} = useContext(GlobalContext)
+  const {profile, loginUser, session} = useContext(GlobalContext)
 
   return (
     <header>
@@ -77,7 +77,7 @@ export default function Header(props: any) {
           
           }
           </button>
-          { user ?
+          { loginUser ?
             <button
               className="
                 block

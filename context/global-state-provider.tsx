@@ -8,7 +8,7 @@ export interface GlobalState {
   targetList: Array<ITarget>
   profile?: IProfile
   session?: Session
-  user?: User
+  loginUser?: User
   favoriteList: Array<IFavorite>
 }
 
@@ -24,7 +24,7 @@ export const GlobalContext = createContext<GlobalState>({
     website: ''
   },
   session: undefined,
-  user: undefined,
+  loginUser: undefined,
   favoriteList: []
 })
 

@@ -24,7 +24,7 @@ const customStyles = {
 };
 
 const Account = () => {
-  const {targetList, profile, user} = useContext(GlobalContext)
+  const {targetList, profile, loginUser} = useContext(GlobalContext)
   const [showModal, setShowModal] = useState(false)
   const {deleteUser} = useUser()
   const openModal = () => {
