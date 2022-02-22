@@ -17,8 +17,8 @@ export default function Auth (props: any) {
         </div>
         <div className="flex justify-end p-2">
           <p className="text-center text-sm text-gray-500 font-light">
-            OYTは一年間の目標共有プラットフォームです。<br />
-            あなたの達成したい目標を決めてシェアしましょう。
+            OYT is a platform for sharing your goals for the year.<br /> 
+            Decide what goals you want to achieve and share them with others.
           </p>
         </div>
         <div>
@@ -75,9 +75,9 @@ export default function Auth (props: any) {
       </div>
       <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
         <p className="text-center text-sm text-gray-500 font-light">
-          <a href="terms" className="underline hover:text-amber-400">利用規約</a>、
-          <a href="privacy" className="underline hover:text-amber-400">プライバシーポリシー</a><br />
-          に同意したうえでログインしてください。
+          Please Login after agreeing to the
+          <a href="terms" className="underline hover:text-amber-400"> Terms </a>and
+          <a href="privacy" className="underline hover:text-amber-400"> Privacy Policy</a>.
         </p>
       </div>
     </div>
