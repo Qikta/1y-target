@@ -159,17 +159,27 @@ const Main = () => {
               <img alt="content" className="object-cover object-center h-full w-full" src={target.ogp_url} />
             }
           </div>
-          <div className="flex justify-center py-5">
-            <button className="w-4 h-4 no-underline text-grey-darker hover:text-red-dark" onClick={handleLike}>
-              { isFavorited ?
-                // @ts-ignore
-                <FontAwesomeIcon icon={faHeartSolid} />
-                :
-                // @ts-ignore
-                <FontAwesomeIcon icon={faHeartRegular} />
-              }
-            </button>
-            <p className="pl-1">{targetFavorite}</p>
+          <div className="flex justify-end py-5">
+            
+                { isFavorited ?
+                  <button className="rounded-full bg-red-200 p-2" onClick={handleLike}>
+                    <div className="w-4 h-4">
+                      {/* @ts-ignore */}
+                      <FontAwesomeIcon icon={faHeartSolid} />
+                    </div>
+                  </button>
+                  :
+                  <button className="rounded-full bg-gray-200 p-2" onClick={handleLike}>
+                    <div className="w-4 h-4">
+                      {/* @ts-ignore */}
+                      <FontAwesomeIcon icon={faHeartRegular} />
+                    </div>
+                  </button>
+                }
+            <p className="px-2 pt-1 text-gray-500">{targetFavorite}</p>
+            <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.title }>
+              <TwitterIcon size={32} round={true} />
+            </TwitterShareButton>
           </div>
           
           <div className="flex flex-col sm:flex-row mt-10">
@@ -295,11 +305,11 @@ const Main = () => {
             />
           </div> */}
 
-          <div className="flex justify-center mx-auto">
+          {/* <div className="flex justify-center mx-auto">
             <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.title }>
               <TwitterIcon size={30} round={true} />
             </TwitterShareButton>
-          </div>
+          </div> */}
         </div>
       </div>
       <Modal
