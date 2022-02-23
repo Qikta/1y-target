@@ -30,7 +30,7 @@ export interface IProfileForm {
 
 export default function useUser() {
   const [session, setSession] = useState()
-  const [user, setUser] = useState<User>();
+  const [loginUser, setLoginUser] = useState<User>();
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState<IProfile>();
   const router = useRouter()
@@ -57,7 +57,7 @@ export default function useUser() {
 
   useEffect(() => {
     // @ts-ignore
-    setUser(supabase.auth.user())
+    setLoginUser(supabase.auth.user())
   }, [session])
 
   // useEffect(() => {
@@ -182,7 +182,7 @@ export default function useUser() {
 
   return {
     session,
-    user,
+    loginUser,
     signInWithTwitter,
     signInWithGoogle,
     signInWithGithub,

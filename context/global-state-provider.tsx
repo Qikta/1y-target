@@ -32,9 +32,9 @@ export const GlobalContext = createContext<GlobalState>({
 const GlobalStateProvider = ({children}: {children: React.ReactNode}) => {
 //   const [state, setState] = useState<GlobalState>()
   const { targetList, favoriteList } = useTarget()
-  const { profile, session, user } = useUser()
+  const { profile, session, loginUser } = useUser()
 
-  const global = {targetList, profile, session, user, favoriteList}
+  const global = {targetList, profile, session, loginUser, favoriteList}
 
   return (
     <GlobalContext.Provider value={global}>{children}</GlobalContext.Provider>

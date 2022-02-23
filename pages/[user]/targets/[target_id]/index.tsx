@@ -301,11 +301,12 @@ const Main = () => {
             </TwitterShareButton>
           </div>
         </div>
-        <Modal
-        isOpen={showModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="auth Modal"
+      </div>
+      <Modal
+          isOpen={showModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="auth Modal"
         >
           <div id="overlay">
             <div id="modalContent">
@@ -313,7 +314,6 @@ const Main = () => {
             </div>
           </div>
         </Modal>
-      </div>
     </>
     
   )
