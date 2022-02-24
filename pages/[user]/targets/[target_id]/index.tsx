@@ -74,9 +74,10 @@ const Main = () => {
           const { error } = await supabase.from('likes').insert(requestData)
   
           if (error) { throw error}
-          location.reload()
+          setIsFavorited(true)
         } catch(err) {
           setTargetFavorite(targetFavorite - 1)
+          setIsFavorited(false)
           alert(err)
         } finally {
           setLoading(false)
@@ -97,10 +98,10 @@ const Main = () => {
         const { error } = await supabase.from('likes').delete().match({id: userFavoriteTarget?.id})
 
         if (error) { throw error}
-        location.reload()
-
+        setIsFavorited(false)
       } catch(err) {
         setTargetFavorite(targetFavorite + 1)
+        setIsFavorited(true)
         alert(err)
       } finally {
         setLoading(false)
@@ -131,9 +132,11 @@ const Main = () => {
     router.push(`${router.asPath}/edit`)
   }
 
-  if (!target) {
-    return <div className="container my-8 mx-auto px-4 md:px-12">missing data...</div>
-  }
+  if (!target) return (
+    <div className="flex justify-center py-16 ">
+      <div className="animate-spin h-10 w-10 border-4 border-amber-500 rounded-full border-t-transparent"></div>
+    </div>
+  )
   
   return (
     <>
@@ -152,7 +155,7 @@ const Main = () => {
           recycle={true}
         />
       }
-      <div className="container px-5 py-5 mx-auto flex flex-col">
+      <div className="container px-5 pt-5 pb-10 mx-auto flex flex-col">
         <div className="lg:w-4/6 mx-auto">
           <div className="overflow-hidden">
             { target.ogp_url &&
