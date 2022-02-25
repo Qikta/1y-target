@@ -26,3 +26,20 @@ a {
   padding: var(--swl-box_padding);
   position: relative;
 }
+
+.markdown ol {
+  @apply list-decimal pl-10;
+}
+.markdown ul {
+  @apply list-disc pl-10;
+}
+.markdown h4 {
+  @apply text-lg border-b border-black my-5;
+}
+
+.markdown h2 {
+  @apply text-2xl font-bold my-5;
+}
+.markdown ul {
+  @apply list-disc pl-10;
+}
