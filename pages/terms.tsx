@@ -1,9 +1,25 @@
+import path from 'path';
+import fs from 'fs';
+import ReactMarkdown from 'react-markdown';
 
+export const getStaticProps = async () => {
+  const markdown = fs.readFileSync(
+    path.join(process.cwd(), '/public/md/terms.md'),
+    'utf8',
+  );
+  return {
+    props: { markdown },
+  };
+};
 
-const Terms =() => {
+const Terms = ({ markdown }: { markdown: string }) => {
   return (
-    <div>
-      Terms page...
+    <div className="container mx-auto rounded-md p-5 my-5 bg-gray-100">
+      <h1 className="text-center text-3xl py-5">Terms</h1>
+      <div className="border-t py-10 border-gray-500 markdown">
+        {/* @ts-ignore */}
+        <ReactMarkdown>{markdown}</ReactMarkdown>
+      </div>
     </div>
   )
 }

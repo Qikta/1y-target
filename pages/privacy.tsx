@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
 };
 const Privacy = ({ markdown }: { markdown: string }) => {
   return (
-    <div className="container mx-auto rounded-full">
+    <div className="container mx-auto ounded-md p-5 my-5 bg-gray-100">
       <h1 className="text-center text-3xl py-5">Privacy Policy</h1>
       <div className="border-t py-10 border-gray-200 markdown">
         {/* @ts-ignore */}
