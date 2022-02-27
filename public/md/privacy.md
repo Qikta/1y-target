@@ -60,4 +60,4 @@
 
 本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。
 
-twitter: qikta
+twitter: [qikta](https://twitter.com/qikta)

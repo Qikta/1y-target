@@ -43,3 +43,7 @@ a {
 .markdown ul {
   @apply list-disc pl-10;
 }
+
+.markdown a {
+  @apply underline text-blue-500;
+}
