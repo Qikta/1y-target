@@ -96,7 +96,7 @@ export default function TargetForm (props: any) {
       <div className="md:flex md:items-center mb-6">
         <div className="md:w-1/3">
             <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="achievementRate">
-              achievement rate
+              Achievement rate
             </label>
         </div>
         <div className="md:w-2/3">
@@ -124,15 +124,16 @@ export default function TargetForm (props: any) {
       <div className="md:flex md:items-center mb-6">
         <div className="md:w-1/3">
             <label className="form-check-label block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="is_complete">
-              is Successd?
+              Your OYT is Successd?
             </label>
         </div>
         <div className="md:w-2/3">
           <input
-            className="form-check-input appearance-none h-6 w-6 border border-gray-300 rounded-sm bg-white checked:bg-green-500 checked:border-green-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+            // className="form-check-input appearance-none h-6 w-6 border border-gray-300 rounded-sm bg-white checked:bg-green-500 checked:border-green-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
             id='is_complete'
             type="checkbox"
-            defaultValue={props?.target?.targetDetail.is_complete}
+            className='form-checkbox h-6 w-6 mt-1 border-gray-500 float-left mr-2'
+            defaultChecked={props?.target?.targetDetail.is_complete}
             {...register('targetDetail.is_complete')}  
           />
         </div>
