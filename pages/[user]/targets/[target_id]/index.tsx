@@ -183,6 +183,10 @@ const Main = () => {
             <TwitterShareButton url={`${baseUrl}${router.asPath}`} title={ target.title }>
               <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
+            <p className="px-1"></p>
+            <FacebookShareButton url={`${baseUrl}${router.asPath}`} title={ target.title }>
+              <FacebookIcon size={32} round={true} />
+            </FacebookShareButton>
           </div>
           
           <div className="flex flex-col sm:flex-row mt-10">
