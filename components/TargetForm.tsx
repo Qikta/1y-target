@@ -8,7 +8,7 @@ import { supabase } from "../utils/supabaseClient"
 export default function TargetForm (props: any) {
   const {profile} = useContext(GlobalContext)
   const { createTarget, editTarget } = useTarget()
-  const { register, handleSubmit } = useForm<ITargetForm>()
+  const { register, handleSubmit, watch } = useForm<ITargetForm>()
   const [submitButtonText, setSubmitButtonText] = useState<string>()
 
   const onSubmit: SubmitHandler<ITargetForm> = (data) => {
@@ -96,7 +96,7 @@ export default function TargetForm (props: any) {
       <div className="md:flex md:items-center mb-6">
         <div className="md:w-1/3">
             <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="achievementRate">
-              Achievement rate
+              Achievement rate ({watch("targetDetail.value", 0)}%)
             </label>
         </div>
         <div className="md:w-2/3">
@@ -104,12 +104,13 @@ export default function TargetForm (props: any) {
             id="achievementRate"
             type="range"
             className="
+              bg-blue-100
                 appearance-none
                 w-full
-                h-6
+                h-2
                 p-0
                 mx-1
-                bg-transparent
+                rounded
                 focus:outline-none
                 focus:ring-0
                 focus:shadow-none"

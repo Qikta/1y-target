@@ -35,7 +35,14 @@ const Edit = () => {
   const {user, target_id} = router.query
   const targetData = targetList.find(item => item.id === target_id)
 
-  if (!targetData) { return <div className="container my-8 mx-auto px-4 md:px-12">missing data...</div> }
+  if (!targetData) {
+    return (
+      <div className="flex justify-center py-16 ">
+        <div className="animate-spin h-10 w-10 border-4 border-amber-500 rounded-full border-t-transparent"></div>
+      </div> 
+    )
+  }
+
   const target: ITargetForm = {
     user_name: profile?.user_name ? profile.user_name : '',
     targetDetail: {
@@ -45,7 +52,7 @@ const Edit = () => {
       value: targetData.value || 0,
       user_id: profile?.id,
       ogp_url: targetData.ogp_url,
-      is_complete: targetData.is_complete || false,
+      is_complete: targetData.is_complete,
     }
   }
 
